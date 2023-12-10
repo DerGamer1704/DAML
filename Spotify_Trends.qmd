@@ -9,7 +9,9 @@ editor: visual
 
 hier Datensatzquelle einfügen
 
-# Pakete laden
+# 1 Vorbereitung
+
+### 1.1 Pakete laden
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -21,9 +23,7 @@ library(explore)
 library(ggplot2)
 ```
 
-# Arbeitsumgebung
-
-Arbeitsverzeichnis setzen
+### 1.2 Arbeitsumgebung festlegen
 
 ```{r}
 setwd(".")  # Arbeitsverzeichnis setzen
@@ -31,45 +31,41 @@ getwd()     # Arbeitsverzeichnis ausgeben
 
 ```
 
-# Daten einlesen
+### 1.3 Daten einlesen
 
 ```{r}
 dataset <- read_csv("spotify-2023.csv")
 ```
 
-# Daten einsehen
+# 2 Überblick über die Daten
 
-Dimensionen anzeigen
+### 2.1 Dimensionen des Datensatzes
 
 ```{r}
 dim(dataset)
 ```
 
-Struktur anzeigen
+### 2.2 Struktur des Datensatzes
 
 ```{r}
 describe_tbl(dataset)
 ```
 
-```{r}
-describe(dataset)
-```
-
-Spaltennamen anzeigen
+### 2.3 Spaltennamen des Datensatzes
 
 ```{r}
 colnames(dataset)
 ```
 
-Zusammenfassung für jede Spalte anzeigen
+### 2.4 Zusammenfassung für jede Spalte anzeigen
 
 ```{r}
 summary(dataset)
 ```
 
-# 2 Bereinigung der Daten
+# 3 Bereinigung der Daten
 
-### 2.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird
+### 3.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird
 
 Die Zusammenfassung der Spalten zeigt, dass "streams" als character erkannt wurde, da dieser Wert jedoch numerisch ist sollte dieser auch als solcher interpretiert werden.
 
@@ -77,7 +73,7 @@ Die Zusammenfassung der Spalten zeigt, dass "streams" als character erkannt wurd
 dataset$streams <- as.numeric(dataset$streams)
 ```
 
-### 2.2 Löschen des Datensatzes ohne eintrag in streams
+### 3.2 Löschen des Datensatzes ohne eintrag in streams
 
 Durch die Umwandlung von character zu numeric wurden NAs erzeugt, dieser Datensatz wird gelöscht, da Streams die für die genaue Betrachtung relevanteste Spalte ist und ohne diese Spalte keine qualitativen Aussagen getroffen werden können. Des Weiteren betrifft dies nur einen Wert, wodurch die Datenmenge nicht signifikant verkleinert wird.
 
@@ -85,7 +81,7 @@ Durch die Umwandlung von character zu numeric wurden NAs erzeugt, dieser Datensa
 dataset <- dataset[!is.na(dataset$streams), ]
 ```
 
-### 2.3 Löschen der Spalte in_shazam_charts
+### 3.3 Löschen der Spalte in_shazam_charts
 
 Darüber hinaus sind in der Spalte "in_shazam_charts" einige NAs enthalten. Dies kann darauf zurückzuführen sein, dass die entsprechenden Songs nicht auf Shazam verfügbar sind oder dass Shazam nicht die Rechte für das Abspielen des Songs hat. Da Shazam insgesamt ein nicht sehr beliebter Musikstreamingsienst ist, wird diese Spalte entfernt, da sie für die weitere Betrachtung nicht relevant ist.
 
@@ -93,7 +89,7 @@ Darüber hinaus sind in der Spalte "in_shazam_charts" einige NAs enthalten. Dies
 dataset$in_shazam_charts <- NULL
 ```
 
-### 2.4 Löschen der Spalte key:
+### 3.4 Löschen der Spalte key:
 
 In der Spalte "key" sind etwa 10% der Werte NAs. Da diese Spalte dadurch nicht aussagekräftig ist, wird diese ebenfalls entfernt.
 
@@ -101,34 +97,31 @@ In der Spalte "key" sind etwa 10% der Werte NAs. Da diese Spalte dadurch nicht a
 dataset$key <- NULL
 ```
 
-### 2.5 Umbennen der Spalten, die ein "%" enthalten
+### 3.5 Umbennen der Spalten, die ein "%" enthalten
 
-Die Spalten "danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", "valence" und "tempo" enthalten ein "%". Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden.
+Die Spalten "danceability", "energy", "speechiness", "acousticness", "instrumentalness", "liveness"und "valence" enthalten ein "%". Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden.
 
 ```{r}
 colnames(dataset)[colnames(dataset) == "danceability_%"] <- "danceability_percent"
 colnames(dataset)[colnames(dataset) == "energy_%"] <- "energy_percent"
-colnames(dataset)[colnames(dataset) == "loudness_%"] <- "loudness_percent"
 colnames(dataset)[colnames(dataset) == "speechiness_%"] <- "speechiness_percent"
 colnames(dataset)[colnames(dataset) == "acousticness_%"] <- "acousticness_percent"
 colnames(dataset)[colnames(dataset) == "instrumentalness_%"] <- "instrumentalness_percent"
 colnames(dataset)[colnames(dataset) == "liveness_%"] <- "liveness_percent"
 colnames(dataset)[colnames(dataset) == "valence_%"] <- "valence_percent"
-colnames(dataset)[colnames(dataset) == "tempo_%"] <- "tempo_percent"
 ```
 
-
-### 2.5 Zusammenfassung des bereinigten Datensatzes
+### 3.6 Zusammenfassung des bereinigten Datensatzes
 
 ```{r}
 summary(dataset)
 ```
 
-# 3 Beliebtheitsscore berechnen
+# 4 Beliebtheitsscore berechnen
 
 Um die Beliebheit der Songs über mehrere Werte beurteilen zu können, wird ein Beliebheitsscore berechnet. Dieser setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen.
 
-### 3.1 Gewichtungen
+### 4.1 Gewichtungen
 
 Die Gewichtung der einzelnen Werte, die in die Bewertung des Beliebtheitsscores einfließen, ergibt sich aus der Beliebtheit der verschiedenen Streamingdienste. Spotify ist der größte Streamingdienst und wird deshalb am stärksten gewichtet. Die anderen Streamingdienste werden entsprechend ihrer Beliebtheit gewichtet. Apple Music ist nach Spotify einer der beliebtesten Streamingdienste und wird deshalb am zweitstärksten gewichtet. Deezer ist in Untersuchungen sehr weit hinter Spotify und Apple, was in der Gewichtung deutlich wird. Orientiert wurde sich hierbei an der Studie von Statista, welche Musikstreamingdienste weltweit am häufigsten genutzt werden. (https://de.statista.com/statistik/daten/studie/1102371/umfrage/marktanteile-der-groessten-musik-streaming-dienste-weltweit/)
 
@@ -139,7 +132,7 @@ w_deezer_charts <- -1.5
 w_apple_charts <- -1.3
 ```
 
-### 3.2 Berechnung des Beliebheitsscores
+### 4.2 Berechnung des Beliebheitsscores
 
 Bie der Berechnung des Beliebtheitssscores wird zunächst der ursprüngliche Wert der einzelnen Spalten mit der entsprechenden Gewichtung multipliziert. Anschließend werden die einzelnen Werte addiert und durch die Anzahl der Spalten geteilt, um den Durchschnitt zu erhalten.
 
@@ -152,30 +145,69 @@ dataset$popularity_score <- (
 ) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts")]))
 ```
 
-# 4 Thesen
+# 5 Thesen
 
-### 4.1 Die Veröffentlichung im Sommer führt zu höheren Streamzahlen
+### 5.1 Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)
+
+Die These stellt die Vermutung auf, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Dies könnte daran leigen, dass im Sommer veröffentlichte Songs oft ein Sommerhit werden könnten und somit häufiger gestreamt werden. Außerdem vermitteln Songs die im Sommer veröffentlicht werden, häufig ein sommerliches Gefühl, wodurch diese Songs auch ganzjährig häufiger gestreamt werden.
+
+Um diese These zu überprüfen, wird zunächst der Durchschnitt der Streams im Sommer berechnet. Anschließend wird der Durchschnitt der Streams in anderen Jahreszeiten berechnet. Diese beiden Werte werden anschließend miteinander verglichen und in einem Balkendiagramm graphisch gegenüber gestellt.
+
+#### 5.1.1 Durchschnittliche Streams im Sommer
 
 ```{r}
-# Durchschnittliche Streams im Sommer
 mean_streams_summer <- mean(dataset$streams[dataset$released_month %in% c(6, 7, 8)])
+```
 
+#### 5.1.2 Durchschnittliche Streams im Sommer
+
+```{r}
 # Durchschnittliche Streams in anderen Jahreszeiten
 mean_streams_other_seasons <- mean(dataset$streams[dataset$released_month %in% c(1, 2, 3, 4, 5, 9, 10, 11, 12)])
+```
 
-# Vergleich der beiden Werte
+#### 5.1.3 Vergleich der beiden Werte
+
+```{r}
 mean_streams_summer / mean_streams_other_seasons
-  
+```
+
+Aus diesem Wert lässt sich erkenne, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht gegen die These, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Deshlab schauen wir uns die Werte im folgenden genauer an.
+
+```{r}
 mean_streams_summer
 mean_streams_other_seasons
+```
 
-# Daten für das Balkendiagramm vorbereiten
+Die Werte der anderen Jahreszeiten sind etwa 50.000 Streams höher als die Werte der im Sommer veröffentlichten Songs.Um den Unterschied einmal graphisch darzustellen, wird ein Balkendiagramm erstellt.
+
+#### 5.1.5 Daten für das Balkendiagramm vorbereiten
+
+```{r}
 bar_data <- data.frame(
-  Season = c("Summer", "Other Seasons"),
+  Season = c("Sommer", "Andere Jahreszeiten"),
   Mean_Streams = c(mean_streams_summer, mean_streams_other_seasons)
 )
+```
 
-#Durschschnittliche Streams über die verschiedenen Monate berechnen
+#### 5.1.6 Balkendiagramm über die durchschnittlichen Streams im Sommer vs. andere Jahreszeiten erstellen
+
+```{r}
+ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
+  labs(title = "Durchschnittliche Streamzahlen im Sommer vs. andere Jahreszeiten",
+       x = "Jahreszeit",
+       y = "Durchschnittliche Streams") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = scales::comma)
+```
+
+Im Balkendiagramm lässt sich erkennen, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht wie oben erwähnt gegen die aufgestellte These. Jedoch ist zu bemerken, dass der Unterschied nicht sehr groß ist. Die Streamzahlen im Sommer sind nur etwa 50.000 Streams niedriger als die Streamzahlen in anderen Jahreszeiten. Dies ist ein Unterschied von etwa 1,5%. Dieser Unterschied ist nicht sehr groß und könnte auch durch Zufall entstanden sein. Deshalb wird im folgenden noch einmal genauer auf die Streamzahlen in den einzelnen Monaten geschaut.
+
+#### 5.1.7 Durschschnittliche Streams über die verschiedenen Monate berechnen
+
+```{r}
 mean_streams_january <- mean(dataset$streams[dataset$released_month %in% c(1)])
 mean_streams_february <- mean(dataset$streams[dataset$released_month %in% c(2)])
 mean_streams_march <- mean(dataset$streams[dataset$released_month %in% c(3)])
@@ -188,29 +220,26 @@ mean_streams_september <- mean(dataset$streams[dataset$released_month %in% c(9)]
 mean_streams_october <- mean(dataset$streams[dataset$released_month %in% c(10)])
 mean_streams_november <- mean(dataset$streams[dataset$released_month %in% c(11)])
 mean_streams_dezember <- mean(dataset$streams[dataset$released_month %in% c(12)])
+```
 
+#### 5.1.8 Daten für das Balkendiagramm vorbereiten
 
-# Balkendiagramm erstellen
-
-ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
-  geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
-  labs(title = "Durchschnittliche Streamzahlen im Sommer vs. andere Jahreszeiten",
-       x = "Jahreszeit",
-       y = "Durchschnittliche Streams") +
-  theme_minimal()
-
-#Balkendiagramm für die Streamzahlen über die verschiedenen Monate
-
-# Daten für das Balkendiagramm vorbereiten und chronologisch ordnen
+```{r}
 bar_data_months <- data.frame(
   Month = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Dezember"),
   Mean_Streams = c(mean_streams_january, mean_streams_february, mean_streams_march, mean_streams_april, mean_streams_may, mean_streams_june, mean_streams_july, mean_streams_august, mean_streams_september, mean_streams_october, mean_streams_november, mean_streams_dezember)
 )
+```
 
-#chronologische Ordnung der Daten
+#### 5.1.9 chronologische Ordnung der Daten
+
+```{r}
 bar_data_months$Month <- factor(bar_data_months$Month, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Dezember"))
+```
 
-#Balkendiagramm erstellen
+#### 5.1.10 Balkendiagramm erstellen über die durchschnittlichen Streams über die verschiedenen Monate
+
+```{r}
 ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
   labs(title = "Durchschnittliche Streamzahlen über die verschiedenen Monate",
@@ -222,31 +251,36 @@ ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
 
 ```
 
+An den durchschnittlichen Streamzahlen über die verschiedenen Monate lässt sich erkenne, dass die Sommermonate, Verhältnismäßig zu den anderen Monaten, nicht die höchsten Streamzahlen haben. Die höchsten Streamzahlen haben die Monate September, Januar und August. Generell lässt sich erkennen, dass die Streams ab Juli ansteigen und nach dem September bis zum Dezember wieder abfallen. Das könnte darauf zurückzuführen sein, dass die Songs die in den Herbstmonaten veröffentlichen veröffentlichen in der dunkleren Jahreszeit ein Gefühl von Wärme und Geborgenheit geben, nach welchem sich Menschen dann das ganze Jahr über sehnen und diese Songs aus diesem Grund ganzjährig beliebt sind. Diese These wird im folgenden noch einmal genauer untersucht.
 
-### 4.2 Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen lineare regression mit zwei werten
+### 5.2 Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)
 
-Es wird in diesem Fall für beide Werte eine lineare Regression durchgeführt, um zu sehen, ob es einen Zusammenhang zwischen den beiden Werten gibt. 
+Die These stellt die Vermutung auf, dass sich ein song besser tanzen eignet, wenn er beliebt ist. Die These wurde mit dem Hintergrund aufgestellt, das Songs die in Diskotheken gespielt werden, meistens sehr beliebt sind und sich gut zum Tanzen eignen. Um diese These zu überprüfen, wird im folgenden ein Scatterplot erstellt, der die Beliebtheit eines Songs mit der Tanzbarkeit des Songs vergleicht.
+
+#### 5.2.1 Scatterplot erstellen
 
 ```{r}
-# Lineare Regression durchführen
-linear_regression <- lm(dataset$popularity_score ~ dataset$danceability_percent)
-
-# Lineare Regression plotten
-plot(dataset$danceability_percent, dataset$popularity_score, xlab = "Tanzbarkeit", ylab = "Beliebtheitsscore", main = "Lineare Regression zwischen Tanzbarkeit und Beliebtheit")
-abline(linear_regression, col = "red")
-
-# Lineare Regression auswerten
-summary(linear_regression)
-
+ggplot(dataset, aes(x = popularity_score, y = danceability_percent)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "turquoise") +
+  labs(title = "Beliebtheit eines Songs im Vergleich zur Tanzbarkeit",
+       x = "Beliebtheit",
+       y = "Tanzbarkeit") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::comma)
 ```
-Aus der linearen Regression lässt sich nicht kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahezu 0 ist.
 
+#### 5.2.2 Korrelationskoeffizient berechnen
 
+```{r}
+cor(dataset$popularity_score, dataset$danceability_percent)
+```
 
-# 5 Machine Learning Modelle
+Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahe 0 ist belegt. Die These kann somit nicht bestätigt werden und die Beliebtheit eines Songs hat keinen Einfluss auf die Tanzbarkeit des Songs.
 
+# 6 Machine Learning Modelle
 
-### 5.1 
+### 6.1 Regression
 
 z-Standardisieren
 
@@ -274,6 +308,7 @@ mlp_dataset_mod <-
 ```
 
 Modell trainieren:
+
 ```{r}
 mlp_dataset_fit <- 
     mlp_dataset_mod |> 
@@ -281,6 +316,7 @@ mlp_dataset_fit <-
 ```
 
 Vorhersage auf den Testdaten:
+
 ```{r}
 pred <- predict(mlp_dataset_fit, dataset_test)
 results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
@@ -289,8 +325,3 @@ results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
 ```{r}
 rmse(data = results, truth = popularity_score, estimate = .pred)
 ```
-
-
-
-
-
