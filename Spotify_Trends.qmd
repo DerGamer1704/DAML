@@ -7,7 +7,7 @@ editor: visual
 
 # Quellenangaben
 
-hier Datensatzquell einfügen
+hier Datensatzquelle einfügen
 
 # Pakete laden
 
@@ -22,7 +22,9 @@ library(ggplot2)
 ```
 
 # Arbeitsumgebung
+
 Arbeitsverzeichnis setzen
+
 ```{r}
 setwd(".")  # Arbeitsverzeichnis setzen
 getwd()     # Arbeitsverzeichnis ausgeben
@@ -30,30 +32,21 @@ getwd()     # Arbeitsverzeichnis ausgeben
 ```
 
 # Daten einlesen
+
 ```{r}
 dataset <- read_csv("spotify-2023.csv")
 ```
 
 # Daten einsehen
 
-Erste und letzte Zeilen anzeigen
-```{r}
-head(dataset, 953)
-tail(dataset, 10)
-```
-
-Ersten Werte jeder Spalte einsehen
-```{r}
-glimpse(dataset)
-```
-
-
 Dimensionen anzeigen
+
 ```{r}
 dim(dataset)
 ```
 
 Struktur anzeigen
+
 ```{r}
 describe_tbl(dataset)
 ```
@@ -62,73 +55,106 @@ describe_tbl(dataset)
 describe(dataset)
 ```
 
-
 Spaltennamen anzeigen
+
 ```{r}
 colnames(dataset)
 ```
 
 Zusammenfassung für jede Spalte anzeigen
+
 ```{r}
 summary(dataset)
 ```
 
-# Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird
+# 2 Bereinigung der Daten
+
+### 2.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird
+
+Die Zusammenfassung der Spalten zeigt, dass "streams" als character erkannt wurde, da dieser Wert jedoch numerisch ist sollte dieser auch als solcher interpretiert werden.
+
 ```{r}
 dataset$streams <- as.numeric(dataset$streams)
 ```
-# Ersetzen der NAs in in_shazam_charts mit 0
-```{r}
-dataset$in_shazam_charts[is.na(dataset$in_shazam_charts)] <- 0
-```
 
-# Löschen des Datensatzes ohne eintrag in streams
+### 2.2 Löschen des Datensatzes ohne eintrag in streams
+
+Durch die Umwandlung von character zu numeric wurden NAs erzeugt, dieser Datensatz wird gelöscht, da Streams die für die genaue Betrachtung relevanteste Spalte ist und ohne diese Spalte keine qualitativen Aussagen getroffen werden können. Des Weiteren betrifft dies nur einen Wert, wodurch die Datenmenge nicht signifikant verkleinert wird.
+
 ```{r}
 dataset <- dataset[!is.na(dataset$streams), ]
 ```
 
-# Beliebtheitsscore berechnen
+### 2.3 Löschen der Spalte in_shazam_charts
+
+Darüber hinaus sind in der Spalte "in_shazam_charts" einige NAs enthalten. Dies kann darauf zurückzuführen sein, dass die entsprechenden Songs nicht auf Shazam verfügbar sind oder dass Shazam nicht die Rechte für das Abspielen des Songs hat. Da Shazam insgesamt ein nicht sehr beliebter Musikstreamingsienst ist, wird diese Spalte entfernt, da sie für die weitere Betrachtung nicht relevant ist.
 
 ```{r}
-# Annahme: Gewichtungen für die verschiedenen Variablen
+dataset$in_shazam_charts <- NULL
+```
+
+### 2.4 Löschen der Spalte key:
+
+In der Spalte "key" sind etwa 10% der Werte NAs. Da diese Spalte dadurch nicht aussagekräftig ist, wird diese ebenfalls entfernt.
+
+```{r}
+dataset$key <- NULL
+```
+
+### 2.5 Umbennen der Spalten, die ein "%" enthalten
+
+Die Spalten "danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", "valence" und "tempo" enthalten ein "%". Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden.
+
+```{r}
+colnames(dataset)[colnames(dataset) == "danceability_%"] <- "danceability_percent"
+colnames(dataset)[colnames(dataset) == "energy_%"] <- "energy_percent"
+colnames(dataset)[colnames(dataset) == "loudness_%"] <- "loudness_percent"
+colnames(dataset)[colnames(dataset) == "speechiness_%"] <- "speechiness_percent"
+colnames(dataset)[colnames(dataset) == "acousticness_%"] <- "acousticness_percent"
+colnames(dataset)[colnames(dataset) == "instrumentalness_%"] <- "instrumentalness_percent"
+colnames(dataset)[colnames(dataset) == "liveness_%"] <- "liveness_percent"
+colnames(dataset)[colnames(dataset) == "valence_%"] <- "valence_percent"
+colnames(dataset)[colnames(dataset) == "tempo_%"] <- "tempo_percent"
+```
+
+
+### 2.5 Zusammenfassung des bereinigten Datensatzes
+
+```{r}
+summary(dataset)
+```
+
+# 3 Beliebtheitsscore berechnen
+
+Um die Beliebheit der Songs über mehrere Werte beurteilen zu können, wird ein Beliebheitsscore berechnet. Dieser setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen.
+
+### 3.1 Gewichtungen
+
+Die Gewichtung der einzelnen Werte, die in die Bewertung des Beliebtheitsscores einfließen, ergibt sich aus der Beliebtheit der verschiedenen Streamingdienste. Spotify ist der größte Streamingdienst und wird deshalb am stärksten gewichtet. Die anderen Streamingdienste werden entsprechend ihrer Beliebtheit gewichtet. Apple Music ist nach Spotify einer der beliebtesten Streamingdienste und wird deshalb am zweitstärksten gewichtet. Deezer ist in Untersuchungen sehr weit hinter Spotify und Apple, was in der Gewichtung deutlich wird. Orientiert wurde sich hierbei an der Studie von Statista, welche Musikstreamingdienste weltweit am häufigsten genutzt werden. (https://de.statista.com/statistik/daten/studie/1102371/umfrage/marktanteile-der-groessten-musik-streaming-dienste-weltweit/)
+
+```{r}
 w_streams <- 1
-w_spotify_charts <- -2  # Negativ, da geringe Werte in den Charts besser sind
+w_spotify_charts <- -2  
 w_deezer_charts <- -1.5
 w_apple_charts <- -1.3
-w_shazam_charts <- -1.1
+```
 
-# Berechnung des Beliebheitsscores
+### 3.2 Berechnung des Beliebheitsscores
+
+Bie der Berechnung des Beliebtheitssscores wird zunächst der ursprüngliche Wert der einzelnen Spalten mit der entsprechenden Gewichtung multipliziert. Anschließend werden die einzelnen Werte addiert und durch die Anzahl der Spalten geteilt, um den Durchschnitt zu erhalten.
+
+```{r}
 dataset$popularity_score <- (
   w_streams * dataset$streams +
   w_spotify_charts * dataset$in_spotify_charts +
   w_deezer_charts * dataset$in_deezer_charts +
-  w_apple_charts * dataset$in_apple_charts +
-  w_shazam_charts * dataset$in_shazam_charts
-) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts", "in_shazam_charts")]))
-
-# Anzeigen des aktualisierten Datensatzes
-head(dataset, 100)
-
+  w_apple_charts * dataset$in_apple_charts
+) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts")]))
 ```
 
-# Bearbeite die Namen der Spalten, sodass diese keine % enthalten
-```{r}
-dataset <- dataset |> rename_with(~str_replace(., "%", "_"))
-```
+# 4 Thesen
 
-
-#These: Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen
-```{r}
-
-# Korrelation berechnen
-correlation_danceability <- cor(dataset$popularity_score, dataset$danceability__)
-
-# Scatterplot erstellen
-plot(dataset$danceability__, dataset$popularity_score, xlab = "Tanzbarkeit", ylab = "Beliebtheitsscore", main = "Korrelation zwischen Tanzbarkeit und Beliebtheit")
-
-```
-
-#These: Die Veröffentlichung im Sommer führt zu höheren Streamzahlen   
+### 4.1 Die Veröffentlichung im Sommer führt zu höheren Streamzahlen
 
 ```{r}
 # Durchschnittliche Streams im Sommer
@@ -184,7 +210,7 @@ bar_data_months <- data.frame(
 #chronologische Ordnung der Daten
 bar_data_months$Month <- factor(bar_data_months$Month, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Dezember"))
 
-#Balkendiagramm erstellen die Monate, es ist genug Platz für die Monatsnamen vorhanden  und die Werte an der y achse sind ausgeschrieben
+#Balkendiagramm erstellen
 ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
   labs(title = "Durchschnittliche Streamzahlen über die verschiedenen Monate",
@@ -195,4 +221,76 @@ ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
   scale_y_continuous(labels = scales::comma)
 
 ```
+
+
+### 4.2 Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen lineare regression mit zwei werten
+
+Es wird in diesem Fall für beide Werte eine lineare Regression durchgeführt, um zu sehen, ob es einen Zusammenhang zwischen den beiden Werten gibt. 
+
+```{r}
+# Lineare Regression durchführen
+linear_regression <- lm(dataset$popularity_score ~ dataset$danceability_percent)
+
+# Lineare Regression plotten
+plot(dataset$danceability_percent, dataset$popularity_score, xlab = "Tanzbarkeit", ylab = "Beliebtheitsscore", main = "Lineare Regression zwischen Tanzbarkeit und Beliebtheit")
+abline(linear_regression, col = "red")
+
+# Lineare Regression auswerten
+summary(linear_regression)
+
+```
+Aus der linearen Regression lässt sich nicht kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahezu 0 ist.
+
+
+
+# 5 Machine Learning Modelle
+
+
+### 5.1 
+
+z-Standardisieren
+
+```{r}
+cols_to_scale <- colnames(dataset |>  dplyr::select(popularity_score))
+dataset_scale <- dataset |> mutate_at(cols_to_scale, ~(scale(.) |>  as.vector()))
+```
+
+Aufteilung in Trainings- und Testset
+
+```{r}
+set.seed(123)
+dataset_split <- initial_split(dataset_scale, prop = 0.8, strata = popularity_score)
+dataset_train <- training(dataset_split)
+dataset_test  <- testing(dataset_split)
+```
+
+Modell initialisieren:
+
+```{r}
+mlp_dataset_mod <- 
+    mlp() |>  
+    set_mode("regression") |> 
+    set_engine("nnet")
+```
+
+Modell trainieren:
+```{r}
+mlp_dataset_fit <- 
+    mlp_dataset_mod |> 
+    fit(popularity_score ~ ., data = dataset_train)
+```
+
+Vorhersage auf den Testdaten:
+```{r}
+pred <- predict(mlp_dataset_fit, dataset_test)
+results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
+```
+
+```{r}
+rmse(data = results, truth = popularity_score, estimate = .pred)
+```
+
+
+
+
 
