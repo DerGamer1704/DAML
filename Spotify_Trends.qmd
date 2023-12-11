@@ -8,6 +8,9 @@ lang: de
 format:
   html:
     theme: zephyr
+    code-line-numbers: true
+    toc: true
+    toc-depth: 3
 ---
 
 # 1 Vorbereitung
@@ -38,6 +41,8 @@ getwd()     # Arbeitsverzeichnis ausgeben
 dataset <- read_csv("spotify-2023.csv")
 ```
 
+------------------------------------------------------------------------
+
 # 2 Überblick über die Daten
 
 ### 2.1 Dimensionen des Datensatzes
@@ -63,6 +68,8 @@ colnames(dataset)
 ```{r}
 summary(dataset)
 ```
+
+------------------------------------------------------------------------
 
 # 3 Bereinigung der Daten
 
@@ -118,6 +125,8 @@ colnames(dataset)[colnames(dataset) == "valence_%"] <- "valence_percent"
 summary(dataset)
 ```
 
+------------------------------------------------------------------------
+
 # 4 Beliebtheitsscore berechnen
 
 Um die Beliebheit der Songs über mehrere Werte beurteilen zu können, wird ein Beliebheitsscore berechnet. Dieser setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen.
@@ -145,6 +154,8 @@ dataset$popularity_score <- (
   w_apple_charts * dataset$in_apple_charts
 ) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts")]))
 ```
+
+------------------------------------------------------------------------
 
 # 5 Thesen
 
@@ -278,6 +289,8 @@ cor(dataset$popularity_score, dataset$danceability_percent)
 
 Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahe 0 ist belegt. Die These kann somit nicht bestätigt werden und die Beliebtheit eines Songs hat keinen Einfluss auf die Tanzbarkeit des Songs.
 
+------------------------------------------------------------------------
+
 # 6 Machine Learning Modelle
 
 ### 6.1 Regression
@@ -332,17 +345,34 @@ results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
 ```
 
 Interquartilsabstand hinzufügen
+
 ```{r}
 rmse(data = results, truth = popularity_score, estimate = .pred)
 ```
 
-
+------------------------------------------------------------------------
 
 # 7 Grenzen des Projekts
 
+grenzen
+
+------------------------------------------------------------------------
+
 # 8 Ausblick
 
+ausblick
+
+------------------------------------------------------------------------
+
 # Quellenverzeichnis
+
+Datensatz:
+
+Statistik:
+
+Theme
+
+------------------------------------------------------------------------
 
 # Ehrenwörtliche Erklärung
 

@@ -73,10 +73,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+   
+  <ul>
+  <li><a href="#vorbereitung" id="toc-vorbereitung" class="nav-link active" data-scroll-target="#vorbereitung">1 Vorbereitung</a>
+  <ul class="collapse">
+  <li><a href="#pakete-laden" id="toc-pakete-laden" class="nav-link" data-scroll-target="#pakete-laden">1.1 Pakete laden</a></li>
+  <li><a href="#arbeitsumgebung-festlegen" id="toc-arbeitsumgebung-festlegen" class="nav-link" data-scroll-target="#arbeitsumgebung-festlegen">1.2 Arbeitsumgebung festlegen</a></li>
+  <li><a href="#daten-einlesen" id="toc-daten-einlesen" class="nav-link" data-scroll-target="#daten-einlesen">1.3 Daten einlesen</a></li>
+  </ul></li>
+  <li><a href="#überblick-über-die-daten" id="toc-überblick-über-die-daten" class="nav-link" data-scroll-target="#überblick-über-die-daten">2 Überblick über die Daten</a>
+  <ul class="collapse">
+  <li><a href="#dimensionen-des-datensatzes" id="toc-dimensionen-des-datensatzes" class="nav-link" data-scroll-target="#dimensionen-des-datensatzes">2.1 Dimensionen des Datensatzes</a></li>
+  <li><a href="#struktur-des-datensatzes" id="toc-struktur-des-datensatzes" class="nav-link" data-scroll-target="#struktur-des-datensatzes">2.2 Struktur des Datensatzes</a></li>
+  <li><a href="#spaltennamen-des-datensatzes" id="toc-spaltennamen-des-datensatzes" class="nav-link" data-scroll-target="#spaltennamen-des-datensatzes">2.3 Spaltennamen des Datensatzes</a></li>
+  <li><a href="#zusammenfassung-für-jede-spalte-anzeigen" id="toc-zusammenfassung-für-jede-spalte-anzeigen" class="nav-link" data-scroll-target="#zusammenfassung-für-jede-spalte-anzeigen">2.4 Zusammenfassung für jede Spalte anzeigen</a></li>
+  </ul></li>
+  <li><a href="#bereinigung-der-daten" id="toc-bereinigung-der-daten" class="nav-link" data-scroll-target="#bereinigung-der-daten">3 Bereinigung der Daten</a>
+  <ul class="collapse">
+  <li><a href="#bearbeiten-der-spalte-streams-sodass-diese-als-numerischer-wert-interpretiert-wird" id="toc-bearbeiten-der-spalte-streams-sodass-diese-als-numerischer-wert-interpretiert-wird" class="nav-link" data-scroll-target="#bearbeiten-der-spalte-streams-sodass-diese-als-numerischer-wert-interpretiert-wird">3.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird</a></li>
+  <li><a href="#löschen-des-datensatzes-ohne-eintrag-in-streams" id="toc-löschen-des-datensatzes-ohne-eintrag-in-streams" class="nav-link" data-scroll-target="#löschen-des-datensatzes-ohne-eintrag-in-streams">3.2 Löschen des Datensatzes ohne eintrag in streams</a></li>
+  <li><a href="#löschen-der-spalte-in_shazam_charts" id="toc-löschen-der-spalte-in_shazam_charts" class="nav-link" data-scroll-target="#löschen-der-spalte-in_shazam_charts">3.3 Löschen der Spalte in_shazam_charts</a></li>
+  <li><a href="#löschen-der-spalte-key" id="toc-löschen-der-spalte-key" class="nav-link" data-scroll-target="#löschen-der-spalte-key">3.4 Löschen der Spalte key:</a></li>
+  <li><a href="#umbennen-der-spalten-die-ein-enthalten" id="toc-umbennen-der-spalten-die-ein-enthalten" class="nav-link" data-scroll-target="#umbennen-der-spalten-die-ein-enthalten">3.5 Umbennen der Spalten, die ein “%” enthalten</a></li>
+  <li><a href="#zusammenfassung-des-bereinigten-datensatzes" id="toc-zusammenfassung-des-bereinigten-datensatzes" class="nav-link" data-scroll-target="#zusammenfassung-des-bereinigten-datensatzes">3.6 Zusammenfassung des bereinigten Datensatzes</a></li>
+  </ul></li>
+  <li><a href="#beliebtheitsscore-berechnen" id="toc-beliebtheitsscore-berechnen" class="nav-link" data-scroll-target="#beliebtheitsscore-berechnen">4 Beliebtheitsscore berechnen</a>
+  <ul class="collapse">
+  <li><a href="#gewichtungen" id="toc-gewichtungen" class="nav-link" data-scroll-target="#gewichtungen">4.1 Gewichtungen</a></li>
+  <li><a href="#berechnung-des-beliebheitsscores" id="toc-berechnung-des-beliebheitsscores" class="nav-link" data-scroll-target="#berechnung-des-beliebheitsscores">4.2 Berechnung des Beliebheitsscores</a></li>
+  </ul></li>
+  <li><a href="#thesen" id="toc-thesen" class="nav-link" data-scroll-target="#thesen">5 Thesen</a>
+  <ul class="collapse">
+  <li><a href="#die-veröffentlichung-im-sommer-führt-zu-höheren-streamzahlen-tim" id="toc-die-veröffentlichung-im-sommer-führt-zu-höheren-streamzahlen-tim" class="nav-link" data-scroll-target="#die-veröffentlichung-im-sommer-führt-zu-höheren-streamzahlen-tim">5.1 Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)</a></li>
+  <li><a href="#je-beliebter-ein-song-ist-desto-besser-lässt-sich-zu-ihm-tanzen-tim" id="toc-je-beliebter-ein-song-ist-desto-besser-lässt-sich-zu-ihm-tanzen-tim" class="nav-link" data-scroll-target="#je-beliebter-ein-song-ist-desto-besser-lässt-sich-zu-ihm-tanzen-tim">5.2 Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)</a></li>
+  </ul></li>
+  <li><a href="#machine-learning-modelle" id="toc-machine-learning-modelle" class="nav-link" data-scroll-target="#machine-learning-modelle">6 Machine Learning Modelle</a>
+  <ul class="collapse">
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">6.1 Regression</a></li>
+  </ul></li>
+  <li><a href="#grenzen-des-projekts" id="toc-grenzen-des-projekts" class="nav-link" data-scroll-target="#grenzen-des-projekts">7 Grenzen des Projekts</a></li>
+  <li><a href="#ausblick" id="toc-ausblick" class="nav-link" data-scroll-target="#ausblick">8 Ausblick</a></li>
+  <li><a href="#quellenverzeichnis" id="toc-quellenverzeichnis" class="nav-link" data-scroll-target="#quellenverzeichnis">Quellenverzeichnis</a></li>
+  <li><a href="#ehrenwörtliche-erklärung" id="toc-ehrenwörtliche-erklärung" class="nav-link" data-scroll-target="#ehrenwörtliche-erklärung">Ehrenwörtliche Erklärung</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -108,38 +155,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pakete-laden" class="level3">
 <h3 class="anchored" data-anchor-id="pakete-laden">1.1 Pakete laden</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Paket 'dials' wurde unter R Version 4.3.2 erstellt</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Paket 'randomForest' wurde unter R Version 4.3.2 erstellt</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Paket 'rpart.plot' wurde unter R Version 4.3.2 erstellt</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dials)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(explore)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(dials)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(explore)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(ggplot2)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="arbeitsumgebung-festlegen" class="level3">
 <h3 class="anchored" data-anchor-id="arbeitsumgebung-festlegen">1.2 Arbeitsumgebung festlegen</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"."</span>)  <span class="co"># Arbeitsverzeichnis setzen</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()     <span class="co"># Arbeitsverzeichnis ausgeben</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">setwd</span>(<span class="st">"."</span>)  <span class="co"># Arbeitsverzeichnis setzen</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">getwd</span>()     <span class="co"># Arbeitsverzeichnis ausgeben</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/beyer/Desktop/DAML/DAML"</code></pre>
+<pre><code>[1] "C:/Users/beyer/Desktop/DAML"</code></pre>
 </div>
 </div>
 </section>
 <section id="daten-einlesen" class="level3">
 <h3 class="anchored" data-anchor-id="daten-einlesen">1.3 Daten einlesen</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"spotify-2023.csv"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"spotify-2023.csv"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 953 Columns: 24
 ── Column specification ────────────────────────────────────────────────────────
@@ -152,6 +190,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
+<hr>
 </section>
 </section>
 <section id="überblick-über-die-daten" class="level1">
@@ -159,7 +198,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="dimensionen-des-datensatzes" class="level3">
 <h3 class="anchored" data-anchor-id="dimensionen-des-datensatzes">2.1 Dimensionen des Datensatzes</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">dim</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 953  24</code></pre>
 </div>
@@ -168,7 +207,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="struktur-des-datensatzes" class="level3">
 <h3 class="anchored" data-anchor-id="struktur-des-datensatzes">2.2 Struktur des Datensatzes</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe_tbl</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">describe_tbl</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>953 observations with 24 variables
 136 observations containing missings (NA)
@@ -180,7 +219,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="spaltennamen-des-datensatzes" class="level3">
 <h3 class="anchored" data-anchor-id="spaltennamen-des-datensatzes">2.3 Spaltennamen des Datensatzes</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">colnames</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "track_name"           "artist(s)_name"       "artist_count"        
  [4] "released_year"        "released_month"       "released_day"        
@@ -196,7 +235,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="zusammenfassung-für-jede-spalte-anzeigen" class="level3">
 <h3 class="anchored" data-anchor-id="zusammenfassung-für-jede-spalte-anzeigen">2.4 Zusammenfassung für jede Spalte anzeigen</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">summary</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  track_name        artist(s)_name      artist_count   released_year 
  Length:953         Length:953         Min.   :1.000   Min.   :1930  
@@ -248,6 +287,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
                                                                    </code></pre>
 </div>
 </div>
+<hr>
 </section>
 </section>
 <section id="bereinigung-der-daten" class="level1">
@@ -256,7 +296,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <h3 class="anchored" data-anchor-id="bearbeiten-der-spalte-streams-sodass-diese-als-numerischer-wert-interpretiert-wird">3.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird</h3>
 <p>Die Zusammenfassung der Spalten zeigt, dass “streams” als character erkannt wurde, da dieser Wert jedoch numerisch ist sollte dieser auch als solcher interpretiert werden.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>streams <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dataset<span class="sc">$</span>streams)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>dataset<span class="sc">$</span>streams <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dataset<span class="sc">$</span>streams)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: NAs durch Umwandlung erzeugt</code></pre>
 </div>
@@ -266,40 +306,40 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <h3 class="anchored" data-anchor-id="löschen-des-datensatzes-ohne-eintrag-in-streams">3.2 Löschen des Datensatzes ohne eintrag in streams</h3>
 <p>Durch die Umwandlung von character zu numeric wurden NAs erzeugt, dieser Datensatz wird gelöscht, da Streams die für die genaue Betrachtung relevanteste Spalte ist und ohne diese Spalte keine qualitativen Aussagen getroffen werden können. Des Weiteren betrifft dies nur einen Wert, wodurch die Datenmenge nicht signifikant verkleinert wird.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> dataset[<span class="sc">!</span><span class="fu">is.na</span>(dataset<span class="sc">$</span>streams), ]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dataset <span class="ot">&lt;-</span> dataset[<span class="sc">!</span><span class="fu">is.na</span>(dataset<span class="sc">$</span>streams), ]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="löschen-der-spalte-in_shazam_charts" class="level3">
 <h3 class="anchored" data-anchor-id="löschen-der-spalte-in_shazam_charts">3.3 Löschen der Spalte in_shazam_charts</h3>
 <p>Darüber hinaus sind in der Spalte “in_shazam_charts” einige NAs enthalten. Dies kann darauf zurückzuführen sein, dass die entsprechenden Songs nicht auf Shazam verfügbar sind oder dass Shazam nicht die Rechte für das Abspielen des Songs hat. Da Shazam insgesamt ein nicht sehr beliebter Musikstreamingsienst ist, wird diese Spalte entfernt, da sie für die weitere Betrachtung nicht relevant ist.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>in_shazam_charts <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>dataset<span class="sc">$</span>in_shazam_charts <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="löschen-der-spalte-key" class="level3">
 <h3 class="anchored" data-anchor-id="löschen-der-spalte-key">3.4 Löschen der Spalte key:</h3>
 <p>In der Spalte “key” sind etwa 10% der Werte NAs. Da diese Spalte dadurch nicht aussagekräftig ist, wird diese ebenfalls entfernt.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>key <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>dataset<span class="sc">$</span>key <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="umbennen-der-spalten-die-ein-enthalten" class="level3">
 <h3 class="anchored" data-anchor-id="umbennen-der-spalten-die-ein-enthalten">3.5 Umbennen der Spalten, die ein “%” enthalten</h3>
 <p>Die Spalten “danceability”, “energy”, “speechiness”, “acousticness”, “instrumentalness”, “liveness”und “valence” enthalten ein “%”. Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"danceability_%"</span>] <span class="ot">&lt;-</span> <span class="st">"danceability_percent"</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"energy_%"</span>] <span class="ot">&lt;-</span> <span class="st">"energy_percent"</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"speechiness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"speechiness_percent"</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"acousticness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"acousticness_percent"</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"instrumentalness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"instrumentalness_percent"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"liveness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"liveness_percent"</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"valence_%"</span>] <span class="ot">&lt;-</span> <span class="st">"valence_percent"</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"danceability_%"</span>] <span class="ot">&lt;-</span> <span class="st">"danceability_percent"</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"energy_%"</span>] <span class="ot">&lt;-</span> <span class="st">"energy_percent"</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"speechiness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"speechiness_percent"</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"acousticness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"acousticness_percent"</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"instrumentalness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"instrumentalness_percent"</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"liveness_%"</span>] <span class="ot">&lt;-</span> <span class="st">"liveness_percent"</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">colnames</span>(dataset)[<span class="fu">colnames</span>(dataset) <span class="sc">==</span> <span class="st">"valence_%"</span>] <span class="ot">&lt;-</span> <span class="st">"valence_percent"</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="zusammenfassung-des-bereinigten-datensatzes" class="level3">
 <h3 class="anchored" data-anchor-id="zusammenfassung-des-bereinigten-datensatzes">3.6 Zusammenfassung des bereinigten Datensatzes</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">summary</span>(dataset)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  track_name        artist(s)_name      artist_count   released_year 
  Length:952         Length:952         Min.   :1.000   Min.   :1930  
@@ -345,6 +385,7 @@ num  (2): in_deezer_playlists, in_shazam_charts
  Max.   :97.00    Max.   :64.00      </code></pre>
 </div>
 </div>
+<hr>
 </section>
 </section>
 <section id="beliebtheitsscore-berechnen" class="level1">
@@ -354,23 +395,24 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <h3 class="anchored" data-anchor-id="gewichtungen">4.1 Gewichtungen</h3>
 <p>Die Gewichtung der einzelnen Werte, die in die Bewertung des Beliebtheitsscores einfließen, ergibt sich aus der Beliebtheit der verschiedenen Streamingdienste. Spotify ist der größte Streamingdienst und wird deshalb am stärksten gewichtet. Die anderen Streamingdienste werden entsprechend ihrer Beliebtheit gewichtet. Apple Music ist nach Spotify einer der beliebtesten Streamingdienste und wird deshalb am zweitstärksten gewichtet. Deezer ist in Untersuchungen sehr weit hinter Spotify und Apple, was in der Gewichtung deutlich wird. Orientiert wurde sich hierbei an der Studie von Statista, welche Musikstreamingdienste weltweit am häufigsten genutzt werden. (https://www.statista.com/chart/20826/music-streaming-services-with-most-subscribers-global-fipp/) In der Statistik sind mehr Streamingdienste zu sehen als hier untersucht werden, dies liegt daran, dass diese nicht erfasst wurden oder, dass kein Zugriff auf die Daten besteht und diese somit nicht aufgenommen werden konnten. Genauer wird darauf noch im Ausblick und in den Grenzen des Projekts eingegangen.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>w_streams <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>w_spotify_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span>  </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>w_deezer_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.5</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>w_apple_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.3</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>w_streams <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>w_spotify_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span>  </span>
+<span id="cb22-3"><a href="#cb22-3"></a>w_deezer_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.5</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>w_apple_charts <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.3</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="berechnung-des-beliebheitsscores" class="level3">
 <h3 class="anchored" data-anchor-id="berechnung-des-beliebheitsscores">4.2 Berechnung des Beliebheitsscores</h3>
 <p>Bie der Berechnung des Beliebtheitssscores wird zunächst der ursprüngliche Wert der einzelnen Spalten mit der entsprechenden Gewichtung multipliziert. Anschließend werden die einzelnen Werte addiert und durch die Anzahl der Spalten geteilt, um den Durchschnitt zu erhalten.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>popularity_score <span class="ot">&lt;-</span> (</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  w_streams <span class="sc">*</span> dataset<span class="sc">$</span>streams <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  w_spotify_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_spotify_charts <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  w_deezer_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_deezer_charts <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  w_apple_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_apple_charts</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dataset[, <span class="fu">c</span>(<span class="st">"streams"</span>, <span class="st">"in_spotify_charts"</span>, <span class="st">"in_deezer_charts"</span>, <span class="st">"in_apple_charts"</span>)]))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>dataset<span class="sc">$</span>popularity_score <span class="ot">&lt;-</span> (</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  w_streams <span class="sc">*</span> dataset<span class="sc">$</span>streams <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  w_spotify_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_spotify_charts <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>  w_deezer_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_deezer_charts <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  w_apple_charts <span class="sc">*</span> dataset<span class="sc">$</span>in_apple_charts</span>
+<span id="cb23-6"><a href="#cb23-6"></a>) <span class="sc">/</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dataset[, <span class="fu">c</span>(<span class="st">"streams"</span>, <span class="st">"in_spotify_charts"</span>, <span class="st">"in_deezer_charts"</span>, <span class="st">"in_apple_charts"</span>)]))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<hr>
 </section>
 </section>
 <section id="thesen" class="level1">
@@ -382,30 +424,30 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="durchschnittliche-streams-im-sommer" class="level4">
 <h4 class="anchored" data-anchor-id="durchschnittliche-streams-im-sommer">5.1.1 Durchschnittliche Streams im Sommer</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mean_streams_summer <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mean_streams_summer <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="durchschnittliche-streams-im-sommer-1" class="level4">
 <h4 class="anchored" data-anchor-id="durchschnittliche-streams-im-sommer-1">5.1.2 Durchschnittliche Streams im Sommer</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mean_streams_other_seasons <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>mean_streams_other_seasons <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="vergleich-der-beiden-werte" class="level4">
 <h4 class="anchored" data-anchor-id="vergleich-der-beiden-werte">5.1.3 Vergleich der beiden Werte</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mean_streams_summer <span class="sc">/</span> mean_streams_other_seasons</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>mean_streams_summer <span class="sc">/</span> mean_streams_other_seasons</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9311501</code></pre>
 </div>
 </div>
 <p>Aus diesem Wert lässt sich erkenne, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht gegen die These, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Deshlab schauen wir uns die Werte im folgenden genauer an.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mean_streams_summer</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>mean_streams_summer</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 485551575</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mean_streams_other_seasons</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>mean_streams_other_seasons</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 521453592</code></pre>
 </div>
@@ -415,23 +457,23 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="daten-für-das-balkendiagramm-vorbereiten" class="level4">
 <h4 class="anchored" data-anchor-id="daten-für-das-balkendiagramm-vorbereiten">5.1.5 Daten für das Balkendiagramm vorbereiten</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>bar_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Season =</span> <span class="fu">c</span>(<span class="st">"Sommer"</span>, <span class="st">"Andere Jahreszeiten"</span>),</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean_Streams =</span> <span class="fu">c</span>(mean_streams_summer, mean_streams_other_seasons)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>bar_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="at">Season =</span> <span class="fu">c</span>(<span class="st">"Sommer"</span>, <span class="st">"Andere Jahreszeiten"</span>),</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">Mean_Streams =</span> <span class="fu">c</span>(mean_streams_summer, mean_streams_other_seasons)</span>
+<span id="cb32-4"><a href="#cb32-4"></a>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="balkendiagramm-über-die-durchschnittlichen-streams-im-sommer-vs.-andere-jahreszeiten-erstellen" class="level4">
 <h4 class="anchored" data-anchor-id="balkendiagramm-über-die-durchschnittlichen-streams-im-sommer-vs.-andere-jahreszeiten-erstellen">5.1.6 Balkendiagramm über die durchschnittlichen Streams im Sommer vs.&nbsp;andere Jahreszeiten erstellen</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bar_data, <span class="fu">aes</span>(<span class="at">x =</span> Season, <span class="at">y =</span> Mean_Streams, <span class="at">fill =</span> Season)) <span class="sc">+</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Durchschnittliche Streamzahlen im Sommer vs. andere Jahreszeiten"</span>,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Jahreszeit"</span>,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Durchschnittliche Streams"</span>) <span class="sc">+</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">ggplot</span>(bar_data, <span class="fu">aes</span>(<span class="at">x =</span> Season, <span class="at">y =</span> Mean_Streams, <span class="at">fill =</span> Season)) <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Durchschnittliche Streamzahlen im Sommer vs. andere Jahreszeiten"</span>,</span>
+<span id="cb33-4"><a href="#cb33-4"></a>       <span class="at">x =</span> <span class="st">"Jahreszeit"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5"></a>       <span class="at">y =</span> <span class="st">"Durchschnittliche Streams"</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Spotify_Trends_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -441,46 +483,46 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="durschschnittliche-streams-über-die-verschiedenen-monate-berechnen" class="level4">
 <h4 class="anchored" data-anchor-id="durschschnittliche-streams-über-die-verschiedenen-monate-berechnen">5.1.7 Durschschnittliche Streams über die verschiedenen Monate berechnen</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mean_streams_january <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>)])</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mean_streams_february <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>)])</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>mean_streams_march <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>)])</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>mean_streams_april <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>)])</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>mean_streams_may <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">5</span>)])</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>mean_streams_june <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>)])</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>mean_streams_july <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>)])</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>mean_streams_august <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>)])</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>mean_streams_september <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">9</span>)])</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>mean_streams_october <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">10</span>)])</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>mean_streams_november <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">11</span>)])</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>mean_streams_dezember <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">12</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>mean_streams_january <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>)])</span>
+<span id="cb34-2"><a href="#cb34-2"></a>mean_streams_february <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>)])</span>
+<span id="cb34-3"><a href="#cb34-3"></a>mean_streams_march <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>)])</span>
+<span id="cb34-4"><a href="#cb34-4"></a>mean_streams_april <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>)])</span>
+<span id="cb34-5"><a href="#cb34-5"></a>mean_streams_may <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">5</span>)])</span>
+<span id="cb34-6"><a href="#cb34-6"></a>mean_streams_june <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>)])</span>
+<span id="cb34-7"><a href="#cb34-7"></a>mean_streams_july <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>)])</span>
+<span id="cb34-8"><a href="#cb34-8"></a>mean_streams_august <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>)])</span>
+<span id="cb34-9"><a href="#cb34-9"></a>mean_streams_september <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">9</span>)])</span>
+<span id="cb34-10"><a href="#cb34-10"></a>mean_streams_october <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">10</span>)])</span>
+<span id="cb34-11"><a href="#cb34-11"></a>mean_streams_november <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">11</span>)])</span>
+<span id="cb34-12"><a href="#cb34-12"></a>mean_streams_dezember <span class="ot">&lt;-</span> <span class="fu">mean</span>(dataset<span class="sc">$</span>streams[dataset<span class="sc">$</span>released_month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">12</span>)])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="daten-für-das-balkendiagramm-vorbereiten-1" class="level4">
 <h4 class="anchored" data-anchor-id="daten-für-das-balkendiagramm-vorbereiten-1">5.1.8 Daten für das Balkendiagramm vorbereiten</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>bar_data_months <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Month =</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"Dezember"</span>),</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean_Streams =</span> <span class="fu">c</span>(mean_streams_january, mean_streams_february, mean_streams_march, mean_streams_april, mean_streams_may, mean_streams_june, mean_streams_july, mean_streams_august, mean_streams_september, mean_streams_october, mean_streams_november, mean_streams_dezember)</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>bar_data_months <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="at">Month =</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"Dezember"</span>),</span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="at">Mean_Streams =</span> <span class="fu">c</span>(mean_streams_january, mean_streams_february, mean_streams_march, mean_streams_april, mean_streams_may, mean_streams_june, mean_streams_july, mean_streams_august, mean_streams_september, mean_streams_october, mean_streams_november, mean_streams_dezember)</span>
+<span id="cb35-4"><a href="#cb35-4"></a>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="chronologische-ordnung-der-daten" class="level4">
 <h4 class="anchored" data-anchor-id="chronologische-ordnung-der-daten">5.1.9 chronologische Ordnung der Daten</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>bar_data_months<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(bar_data_months<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"Dezember"</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>bar_data_months<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(bar_data_months<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>, <span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span>, <span class="st">"Dezember"</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="balkendiagramm-erstellen-über-die-durchschnittlichen-streams-über-die-verschiedenen-monate" class="level4">
 <h4 class="anchored" data-anchor-id="balkendiagramm-erstellen-über-die-durchschnittlichen-streams-über-die-verschiedenen-monate">5.1.10 Balkendiagramm erstellen über die durchschnittlichen Streams über die verschiedenen Monate</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bar_data_months, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Mean_Streams, <span class="at">fill =</span> Month)) <span class="sc">+</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Durchschnittliche Streamzahlen über die verschiedenen Monate"</span>,</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Monat"</span>,</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Durchschnittliche Streams"</span>) <span class="sc">+</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">ggplot</span>(bar_data_months, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Mean_Streams, <span class="at">fill =</span> Month)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Durchschnittliche Streamzahlen über die verschiedenen Monate"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4"></a>       <span class="at">x =</span> <span class="st">"Monat"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5"></a>       <span class="at">y =</span> <span class="st">"Durchschnittliche Streams"</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Spotify_Trends_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -494,14 +536,14 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="scatterplot-erstellen" class="level4">
 <h4 class="anchored" data-anchor-id="scatterplot-erstellen">5.2.1 Scatterplot erstellen</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dataset, <span class="fu">aes</span>(<span class="at">x =</span> popularity_score, <span class="at">y =</span> danceability_percent)) <span class="sc">+</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"turquoise"</span>) <span class="sc">+</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Beliebtheit eines Songs im Vergleich zur Tanzbarkeit"</span>,</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Beliebtheit"</span>,</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Tanzbarkeit"</span>) <span class="sc">+</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">ggplot</span>(dataset, <span class="fu">aes</span>(<span class="at">x =</span> popularity_score, <span class="at">y =</span> danceability_percent)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"turquoise"</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Beliebtheit eines Songs im Vergleich zur Tanzbarkeit"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5"></a>       <span class="at">x =</span> <span class="st">"Beliebtheit"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6"></a>       <span class="at">y =</span> <span class="st">"Tanzbarkeit"</span>) <span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -513,12 +555,13 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <section id="korrelationskoeffizient-berechnen" class="level4">
 <h4 class="anchored" data-anchor-id="korrelationskoeffizient-berechnen">5.2.2 Korrelationskoeffizient berechnen</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dataset<span class="sc">$</span>popularity_score, dataset<span class="sc">$</span>danceability_percent)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">cor</span>(dataset<span class="sc">$</span>popularity_score, dataset<span class="sc">$</span>danceability_percent)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.1054569</code></pre>
 </div>
 </div>
 <p>Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahe 0 ist belegt. Die These kann somit nicht bestätigt werden und die Beliebtheit eines Songs hat keinen Einfluss auf die Tanzbarkeit des Songs.</p>
+<hr>
 </section>
 </section>
 </section>
@@ -528,8 +571,8 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <h3 class="anchored" data-anchor-id="regression">6.1 Regression</h3>
 <p>z-Standardisieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"danceability_percent"</span>, <span class="st">"energy_percent"</span>, <span class="st">"speechiness_percent"</span>, <span class="st">"acousticness_percent"</span>, <span class="st">"instrumentalness_percent"</span>, <span class="st">"liveness_percent"</span>, <span class="st">"valence_percent"</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>cols_to_scale <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dataset <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(relevant_cols))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>relevant_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"danceability_percent"</span>, <span class="st">"energy_percent"</span>, <span class="st">"speechiness_percent"</span>, <span class="st">"acousticness_percent"</span>, <span class="st">"instrumentalness_percent"</span>, <span class="st">"liveness_percent"</span>, <span class="st">"valence_percent"</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a>cols_to_scale <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dataset <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(relevant_cols))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 ℹ Please use `all_of()` or `any_of()` instead.
@@ -541,41 +584,41 @@ num  (2): in_deezer_playlists, in_shazam_charts
 
 See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dataset_scale <span class="ot">&lt;-</span> dataset <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(cols_to_scale, <span class="sc">~</span>(<span class="fu">scale</span>(.) <span class="sc">|&gt;</span>  <span class="fu">as.vector</span>()))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>dataset_scale <span class="ot">&lt;-</span> dataset <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(cols_to_scale, <span class="sc">~</span>(<span class="fu">scale</span>(.) <span class="sc">|&gt;</span>  <span class="fu">as.vector</span>()))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Aufteilung in Trainings- und Testset</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>dataset_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(dataset_scale, <span class="at">prop =</span> <span class="fl">0.8</span>, <span class="at">strata =</span> popularity_score)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> <span class="fu">training</span>(dataset_split)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>dataset_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(dataset_split)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a>dataset_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(dataset_scale, <span class="at">prop =</span> <span class="fl">0.8</span>, <span class="at">strata =</span> popularity_score)</span>
+<span id="cb45-3"><a href="#cb45-3"></a>dataset_train <span class="ot">&lt;-</span> <span class="fu">training</span>(dataset_split)</span>
+<span id="cb45-4"><a href="#cb45-4"></a>dataset_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(dataset_split)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Auswählen der relevanten Spalten</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> dataset_train <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>dataset_test <span class="ot">&lt;-</span> dataset_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>dataset_train <span class="ot">&lt;-</span> dataset_train <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span>
+<span id="cb46-2"><a href="#cb46-2"></a>dataset_test <span class="ot">&lt;-</span> dataset_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Modell initialisieren:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mlp_dataset_mod <span class="ot">&lt;-</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mlp</span>() <span class="sc">|&gt;</span>  </span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"nnet"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>mlp_dataset_mod <span class="ot">&lt;-</span> </span>
+<span id="cb47-2"><a href="#cb47-2"></a>    <span class="fu">mlp</span>() <span class="sc">|&gt;</span>  </span>
+<span id="cb47-3"><a href="#cb47-3"></a>    <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb47-4"><a href="#cb47-4"></a>    <span class="fu">set_engine</span>(<span class="st">"nnet"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Modell trainieren:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>mlp_dataset_fit <span class="ot">&lt;-</span> </span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    mlp_dataset_mod <span class="sc">|&gt;</span> </span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(popularity_score <span class="sc">~</span> ., <span class="at">data =</span> dataset_train)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mlp_dataset_fit <span class="ot">&lt;-</span> </span>
+<span id="cb48-2"><a href="#cb48-2"></a>    mlp_dataset_mod <span class="sc">|&gt;</span> </span>
+<span id="cb48-3"><a href="#cb48-3"></a>    <span class="fu">fit</span>(popularity_score <span class="sc">~</span> ., <span class="at">data =</span> dataset_train)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Vorhersage auf den Testdaten:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mlp_dataset_fit, dataset_test)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> dataset_test <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(popularity_score) <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mlp_dataset_fit, dataset_test)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>results <span class="ot">&lt;-</span> dataset_test <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(popularity_score) <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Interquartilsabstand hinzufügen</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(<span class="at">data =</span> results, <span class="at">truth =</span> popularity_score, <span class="at">estimate =</span> .pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">rmse</span>(<span class="at">data =</span> results, <span class="at">truth =</span> popularity_score, <span class="at">estimate =</span> .pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
@@ -583,76 +626,25 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 1 rmse    standard     162582.</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-Shiny-Code</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Paket 'shiny' wurde unter R Version 4.3.2 erstellt</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attache Paket: 'shiny'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Das folgende Objekt ist maskiert 'package:infer':
-
-    observe</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinymaterial)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Paket 'shinymaterial' wurde unter R Version 4.3.2 erstellt</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># UI für das Eingabefeld erstellen</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Eingabefeld für einen neuen Datensatz"</span>),</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Danceability"</span>, <span class="st">"Danceability"</span>),</span>
-<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Energy"</span>, <span class="st">"Energy"</span>),</span>
-<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Speechiness"</span>, <span class="st">"Speechiness"</span>),</span>
-<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Acousticness"</span>, <span class="st">"Acousticness"</span>),</span>
-<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Instrumentalness"</span>, <span class="st">"Instrumentalness"</span>),</span>
-<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Liveness"</span>, <span class="st">"Liveness"</span>),</span>
-<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Valence"</span>, <span class="st">"Valence"</span>),</span>
-<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">actionButton</span>(<span class="st">"submitBtn"</span>, <span class="st">"Vorhersage durchführen"</span>)</span>
-<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Vorhersageergebnisse:"</span>),</span>
-<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">verbatimTextOutput</span>(<span class="st">"predictionOutput"</span>)</span>
-<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Server-Funktion für die Vorhersage</span></span>
-<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Deine Vorhersagefunktion hier einfügen, basierend auf den eingegebenen Werten</span></span>
-<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>submitBtn, {</span>
-<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a>    feature1_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(input<span class="sc">$</span>feature1)</span>
-<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a>    feature2_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(input<span class="sc">$</span>feature2)</span>
-<span id="cb64-28"><a href="#cb64-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Weitere eingegebene Features hinzufügen</span></span>
-<span id="cb64-29"><a href="#cb64-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-30"><a href="#cb64-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hier die Vorhersage durchführen und das Ergebnis anzeigen</span></span>
-<span id="cb64-31"><a href="#cb64-31" aria-hidden="true" tabindex="-1"></a>    prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(mlp_dataset_fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">feature1 =</span> feature1_value, <span class="at">feature2 =</span> feature2_value))</span>
-<span id="cb64-32"><a href="#cb64-32" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>predictionOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>(<span class="fu">paste</span>(<span class="st">"Vorhergesagter Popularitätsscore:"</span>, prediction))</span>
-<span id="cb64-33"><a href="#cb64-33" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb64-34"><a href="#cb64-34" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb64-35"><a href="#cb64-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-36"><a href="#cb64-36" aria-hidden="true" tabindex="-1"></a><span class="co"># App starten</span></span>
-<span id="cb64-37"><a href="#cb64-37" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
-</div>
-</div>
+<hr>
 </section>
 </section>
 <section id="grenzen-des-projekts" class="level1">
 <h1>7 Grenzen des Projekts</h1>
+<p>grenzen</p>
+<hr>
 </section>
 <section id="ausblick" class="level1">
 <h1>8 Ausblick</h1>
+<p>ausblick</p>
+<hr>
 </section>
 <section id="quellenverzeichnis" class="level1">
 <h1>Quellenverzeichnis</h1>
+<p>Datensatz:</p>
+<p>Statistik:</p>
+<p>Theme</p>
+<hr>
 </section>
 <section id="ehrenwörtliche-erklärung" class="level1">
 <h1>Ehrenwörtliche Erklärung</h1>
