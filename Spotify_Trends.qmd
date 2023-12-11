@@ -1,16 +1,14 @@
 ---
 title: Spotify Trends
-author: Markus Janke <br> Tim Beyer
+author:
+  - name: Markus Janke
+  - name: Tim Beyer
 editor: visual
 lang: de
 format:
   html:
     theme: zephyr
 ---
-
-# Quellenangaben
-
-hier Datensatzquelle einfügen
 
 # 1 Vorbereitung
 
@@ -287,7 +285,8 @@ Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden We
 z-Standardisieren
 
 ```{r}
-cols_to_scale <- colnames(dataset |>  dplyr::select(popularity_score))
+relevant_cols <- c("danceability_percent", "energy_percent", "speechiness_percent", "acousticness_percent", "instrumentalness_percent", "liveness_percent", "valence_percent")
+cols_to_scale <- colnames(dataset |>  dplyr::select(relevant_cols))
 dataset_scale <- dataset |> mutate_at(cols_to_scale, ~(scale(.) |>  as.vector()))
 ```
 
@@ -303,7 +302,6 @@ dataset_test  <- testing(dataset_split)
 Auswählen der relevanten Spalten
 
 ```{r}
-relevant_cols <- c("popularity_score", "danceability_percent", "energy_percent", "speechiness_percent", "acousticness_percent", "instrumentalness_percent", "liveness_percent", "valence_percent")
 dataset_train <- dataset_train %>% select(popularity_score, relevant_cols)
 dataset_test <- dataset_test %>% select(popularity_score, relevant_cols)
 
@@ -333,9 +331,12 @@ pred <- predict(mlp_dataset_fit, dataset_test)
 results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
 ```
 
+Interquartilsabstand hinzufügen
 ```{r}
 rmse(data = results, truth = popularity_score, estimate = .pred)
 ```
+
+
 
 # 7 Grenzen des Projekts
 

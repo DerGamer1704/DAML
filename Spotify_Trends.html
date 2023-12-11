@@ -6,7 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Markus Janke   Tim Beyer">
+<meta name="author" content="Markus Janke">
+<meta name="author" content="Tim Beyer">
 
 <title>Spotify Trends</title>
 <style>
@@ -88,9 +89,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor:in</div>
+    <div class="quarto-title-meta-heading">Autor:innen</div>
     <div class="quarto-title-meta-contents">
-             <p>Markus Janke <br> Tim Beyer </p>
+             <p>Markus Janke </p>
+             <p>Tim Beyer </p>
           </div>
   </div>
     
@@ -101,10 +103,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="quellenangaben" class="level1">
-<h1>Quellenangaben</h1>
-<p>hier Datensatzquelle einfügen</p>
-</section>
 <section id="vorbereitung" class="level1">
 <h1>1 Vorbereitung</h1>
 <section id="pakete-laden" class="level3">
@@ -530,20 +528,8 @@ num  (2): in_deezer_playlists, in_shazam_charts
 <h3 class="anchored" data-anchor-id="regression">6.1 Regression</h3>
 <p>z-Standardisieren</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>cols_to_scale <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dataset <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(popularity_score))</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>dataset_scale <span class="ot">&lt;-</span> dataset <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(cols_to_scale, <span class="sc">~</span>(<span class="fu">scale</span>(.) <span class="sc">|&gt;</span>  <span class="fu">as.vector</span>()))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Aufteilung in Trainings- und Testset</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>dataset_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(dataset_scale, <span class="at">prop =</span> <span class="fl">0.8</span>, <span class="at">strata =</span> popularity_score)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> <span class="fu">training</span>(dataset_split)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>dataset_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(dataset_split)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Auswählen der relevanten Spalten</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"popularity_score"</span>, <span class="st">"danceability_percent"</span>, <span class="st">"energy_percent"</span>, <span class="st">"speechiness_percent"</span>, <span class="st">"acousticness_percent"</span>, <span class="st">"instrumentalness_percent"</span>, <span class="st">"liveness_percent"</span>, <span class="st">"valence_percent"</span>)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> dataset_train <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>relevant_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"danceability_percent"</span>, <span class="st">"energy_percent"</span>, <span class="st">"speechiness_percent"</span>, <span class="st">"acousticness_percent"</span>, <span class="st">"instrumentalness_percent"</span>, <span class="st">"liveness_percent"</span>, <span class="st">"valence_percent"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>cols_to_scale <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dataset <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(relevant_cols))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 ℹ Please use `all_of()` or `any_of()` instead.
@@ -555,7 +541,19 @@ num  (2): in_deezer_playlists, in_shazam_charts
 
 See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dataset_test <span class="ot">&lt;-</span> dataset_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dataset_scale <span class="ot">&lt;-</span> dataset <span class="sc">|&gt;</span> <span class="fu">mutate_at</span>(cols_to_scale, <span class="sc">~</span>(<span class="fu">scale</span>(.) <span class="sc">|&gt;</span>  <span class="fu">as.vector</span>()))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Aufteilung in Trainings- und Testset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>dataset_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(dataset_scale, <span class="at">prop =</span> <span class="fl">0.8</span>, <span class="at">strata =</span> popularity_score)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> <span class="fu">training</span>(dataset_split)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>dataset_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(dataset_split)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Auswählen der relevanten Spalten</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dataset_train <span class="ot">&lt;-</span> dataset_train <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>dataset_test <span class="ot">&lt;-</span> dataset_test <span class="sc">%&gt;%</span> <span class="fu">select</span>(popularity_score, relevant_cols)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Modell initialisieren:</p>
 <div class="cell">
@@ -575,13 +573,74 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mlp_dataset_fit, dataset_test)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> dataset_test <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(popularity_score) <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Interquartilsabstand hinzufügen</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(<span class="at">data =</span> results, <span class="at">truth =</span> popularity_score, <span class="at">estimate =</span> .pred)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rmse    standard        1.09</code></pre>
+1 rmse    standard     162582.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-Shiny-Code</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Paket 'shiny' wurde unter R Version 4.3.2 erstellt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attache Paket: 'shiny'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Das folgende Objekt ist maskiert 'package:infer':
+
+    observe</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinymaterial)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Paket 'shinymaterial' wurde unter R Version 4.3.2 erstellt</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># UI für das Eingabefeld erstellen</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Eingabefeld für einen neuen Datensatz"</span>),</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Danceability"</span>, <span class="st">"Danceability"</span>),</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Energy"</span>, <span class="st">"Energy"</span>),</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Speechiness"</span>, <span class="st">"Speechiness"</span>),</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Acousticness"</span>, <span class="st">"Acousticness"</span>),</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Instrumentalness"</span>, <span class="st">"Instrumentalness"</span>),</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Liveness"</span>, <span class="st">"Liveness"</span>),</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"Valence"</span>, <span class="st">"Valence"</span>),</span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">actionButton</span>(<span class="st">"submitBtn"</span>, <span class="st">"Vorhersage durchführen"</span>)</span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Vorhersageergebnisse:"</span>),</span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">verbatimTextOutput</span>(<span class="st">"predictionOutput"</span>)</span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Server-Funktion für die Vorhersage</span></span>
+<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Deine Vorhersagefunktion hier einfügen, basierend auf den eingegebenen Werten</span></span>
+<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>submitBtn, {</span>
+<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a>    feature1_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(input<span class="sc">$</span>feature1)</span>
+<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a>    feature2_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(input<span class="sc">$</span>feature2)</span>
+<span id="cb64-28"><a href="#cb64-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Weitere eingegebene Features hinzufügen</span></span>
+<span id="cb64-29"><a href="#cb64-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-30"><a href="#cb64-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hier die Vorhersage durchführen und das Ergebnis anzeigen</span></span>
+<span id="cb64-31"><a href="#cb64-31" aria-hidden="true" tabindex="-1"></a>    prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(mlp_dataset_fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">feature1 =</span> feature1_value, <span class="at">feature2 =</span> feature2_value))</span>
+<span id="cb64-32"><a href="#cb64-32" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>predictionOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>(<span class="fu">paste</span>(<span class="st">"Vorhergesagter Popularitätsscore:"</span>, prediction))</span>
+<span id="cb64-33"><a href="#cb64-33" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb64-34"><a href="#cb64-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb64-35"><a href="#cb64-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-36"><a href="#cb64-36" aria-hidden="true" tabindex="-1"></a><span class="co"># App starten</span></span>
+<span id="cb64-37"><a href="#cb64-37" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
 </div>
 </div>
 </section>
