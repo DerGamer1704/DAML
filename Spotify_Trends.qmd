@@ -71,7 +71,7 @@ library(readxl)
 library(skimr)
 ```
 
-Nun werden die Daten eingelesen und in der Variable "dataset" gespeichert, auf welche in den folgenden Kapitel zugegriffen wird. Die Daten werden als Excel-Datei eingelesen, da diese im Vergleich zu CSV-Dateien die Spalten in den korrekten . 
+Nun werden die Daten eingelesen und in der Variable "dataset" gespeichert, auf welche in den folgenden Kapitel zugegriffen wird. Die Daten werden als Excel-Datei eingelesen, da diese im Vergleich zu CSV-Dateien die Spalten in den korrekten. 
 
 ```{r, message=FALSE}
 dataset <- read_excel("spotify-2023.xlsx")
@@ -298,7 +298,7 @@ In der Zusammenfassung lässt sich direkt erkennen, dass eine Reihe, sowie 2 Spa
 
 ------------------------------------------------------------------------
 
-# Berechnung eines Beliebtheitsscores (Markus, Tim)
+# Berechnung eines Beliebtheitsscores (Tim)
 
 Da für einige der Thesen, sowie der Machine Learning Modelle soll die Beliebtheit eines Songs betrachtet werden. Dies führt zu der Problemstellung, dass mehrere Werte eine Aussage über die Beliebheit eines Songs treffen. Dabei ist es so, dass einige Werte eine Starke aussage auf die Beliebtheit treffen können, andere Werte hingegen treffen nur eine schwächere Aussage. Um ein Beispiel heranzuziehen, die Anzahl der Streams kann eine höhere Aussage über die Beliebtheit treffen, als die Platzierung in den Charts eines Musikstreamingdienstes. Dies leigt daran, dass die Anzahl der Streams eine absolute Größe und eine Aussage trifft wie oft ein Song gehört wird. Die Platzierung und Präsenz in den Charts hingegen ist eine relative Größe, da sie nur die Platzierung im Vergleich zu anderen Songs angibt. Das Ziel ist es, jedoch jetzt eine Kennzahl, also einen Beliebtheitsscore einzuführen, der die verschiedenen Werte zusammenfasst und eine Aussage über die Beliebtheit eines Songs trifft. Der Beliebtheitsscore setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen. Um den Unterschiedlichen Aussagekräften gerecht zu werden wird für jeden Parameter, der in die Berechnung einfließt eine Gewichtung vorgenommen, die die Aussagekraft des jewiligen Parameters widerspiegelt.
 
@@ -354,40 +354,31 @@ Die Berechnung des Beliebtheitsscores ist nun abgeschlossen und es kann mit der 
 
 # Thesen
 
-## Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)
+## These 1: Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)
 
 Die These stellt die Vermutung auf, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Dies könnte daran leigen, dass im Sommer veröffentlichte Songs oft ein Sommerhit werden könnten und somit häufiger gestreamt werden. Außerdem vermitteln Songs die im Sommer veröffentlicht werden, häufig ein sommerliches Gefühl, wodurch diese Songs auch ganzjährig häufiger gestreamt werden.
 
-Um diese These zu überprüfen, wird zunächst der Durchschnitt der Streams im Sommer berechnet. Anschließend wird der Durchschnitt der Streams in anderen Jahreszeiten berechnet. Diese beiden Werte werden anschließend miteinander verglichen und in einem Balkendiagramm graphisch gegenüber gestellt.
-
-### Durchschnittliche Streams im Sommer
+Um diese These zu überprüfen, wird zunächst der Durchschnitt der Streams im Sommer berechnet. Anschließend wird der Durchschnitt der Streams in anderen Jahreszeiten berechnet. Diese beiden Werte werden anschließend miteinander verglichen und in einem Balkendiagramm graphisch gegenüber gestellt. Die Einteilung der Monate für den Sommer erfolgt dabei anhand der meteorologischen Jahreszeiten. Diese teilen das Jahr in Frühling (März, April, Mai), Sommer (Juni, Juli, August), Herbst (September, Oktober, November) und Winter (Dezember, Januar, Februar) ein. Damit werden für den Sommer die Monate Juni, Juli und August betrachtet.
 
 ```{r}
 mean_streams_summer <- mean(dataset$streams[dataset$released_month %in% c(6, 7, 8)])
+mean_streams_summer
 ```
-
-### Durchschnittliche Streams im Sommer
 
 ```{r}
 mean_streams_other_seasons <- mean(dataset$streams[dataset$released_month %in% c(1, 2, 3, 4, 5, 9, 10, 11, 12)])
+mean_streams_other_seasons
 ```
 
-### Vergleich der beiden Werte
+Die durchschnittlichen Streams immer Sommer betragen *`r mean_streams_summer`* und die durchschnittlichen Streams in anderen Jahreszeiten betragen *`r mean_streams_other_seasons`*. Hier lässt sich schon erkennen, dass die Streams im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Für einen genaueren Vergleich wird das Verhältnis der beiden Werte berechnet.
 
 ```{r}
 mean_streams_summer / mean_streams_other_seasons
 ```
 
-Aus diesem Wert lässt sich erkenne, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht gegen die These, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Deshlab schauen wir uns die Werte im folgenden genauer an.
+Die beiden Werte liegen verhältnismäßig nah beieinander, in etwa 50.000 Streams. Um diese Differenz besser einschätzen zu können, wird ein Balkendiagramm erstellt.
 
-```{r}
-mean_streams_summer
-mean_streams_other_seasons
-```
-
-Die Werte der anderen Jahreszeiten sind etwa 50.000 Streams höher als die Werte der im Sommer veröffentlichten Songs.Um den Unterschied einmal graphisch darzustellen, wird ein Balkendiagramm erstellt.
-
-### Daten für das Balkendiagramm vorbereiten
+Die Daten werden zunächst für das Balkendiagramm vorbereiten.
 
 ```{r}
 bar_data <- data.frame(
@@ -396,7 +387,7 @@ bar_data <- data.frame(
 )
 ```
 
-### Balkendiagramm über die durchschnittlichen Streams im Sommer vs. andere Jahreszeiten erstellen
+Anschließend wir das Balkendiagramm über die durchschnittlichen Streams im Sommer im Vergleich zu den anderen andere Jahreszeiten erstellt.
 
 ```{r}
 ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
@@ -409,9 +400,9 @@ ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
   scale_y_continuous(labels = scales::comma)
 ```
 
-Im Balkendiagramm lässt sich erkennen, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht wie oben erwähnt gegen die aufgestellte These. Jedoch ist zu bemerken, dass der Unterschied nicht sehr groß ist. Die Streamzahlen im Sommer sind nur etwa 50.000 Streams niedriger als die Streamzahlen in anderen Jahreszeiten. Dies ist ein Unterschied von etwa 1,5%. Dieser Unterschied ist nicht sehr groß und könnte auch durch Zufall entstanden sein. Deshalb wird im folgenden noch einmal genauer auf die Streamzahlen in den einzelnen Monaten geschaut.
+Im Balkendiagramm lässt sich erkennen, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht wie oben erwähnt gegen die aufgestellte These. Jedoch ist zu bemerken, dass der Unterschied verhältnismäßig nicht sehr groß ist. Die Streamzahlen im Sommer sind nur etwa 50.000 Streams niedriger als die Streamzahlen in anderen Jahreszeiten. Interessant wäre es in diesem Fall auf die einzelnen Monate zu blicken um festzustellen, ob die Abweichung vom Sommer zu den anderen Jahreszeiten durch die Abweichung eines einzelnen Monat zustande gekommen ist.
 
-### Durschschnittliche Streams über die verschiedenen Monate berechnen
+Zunächst werden hier die durschschnittliche Streams über die verschiedenen Monate berechnet.
 
 ```{r}
 mean_streams_january <- mean(dataset$streams[dataset$released_month %in% c(1)])
@@ -428,7 +419,24 @@ mean_streams_november <- mean(dataset$streams[dataset$released_month %in% c(11)]
 mean_streams_dezember <- mean(dataset$streams[dataset$released_month %in% c(12)])
 ```
 
-### Daten für das Balkendiagramm vorbereiten
+Diese betragen für die einzelnen Monate:
+
+* Januar: *`r mean_streams_january`* <br>
+* Februar: *`r mean_streams_january`* <br>
+* März: *`r mean_streams_january`* <br>
+* April: *`r mean_streams_january`* <br>
+* Mai: *`r mean_streams_january`* <br>
+* Juni: *`r mean_streams_january`* <br>
+* Juli: *`r mean_streams_january`* <br>
+* August: *`r mean_streams_january`* <br>
+* September: *`r mean_streams_january`* <br>
+* Oktober: *`r mean_streams_january`* <br>
+* November: *`r mean_streams_january`* <br>
+* Dezember: *`r mean_streams_january`* <br>
+
+Da diese Werte sind wie oben auch sehr groß um die Werte besser vergleichen zu können und die Aussage interpretieren zu können, werden diese in einem Balkendiagramm dargestellt.
+
+Auch hier werden zunäscht wie der die Daten für das Balkendiagramm vorbereitet.
 
 ```{r}
 bar_data_months <- data.frame(
@@ -437,13 +445,13 @@ bar_data_months <- data.frame(
 )
 ```
 
-### chronologische Ordnung der Daten
+Die Daten werden vor der Erstellung des Balkendiagramms noch chronologisch sortiert, damit sie den Jahresablauf von links nach recht auf der x-Achse darstellen.
 
 ```{r}
 bar_data_months$Month <- factor(bar_data_months$Month, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Dezember"))
 ```
 
-### Balkendiagramm erstellen über die durchschnittlichen Streams über die verschiedenen Monate
+Danach wird das Balkendiagramm für die durschnittliche Streamzahlen über die verschiedenen Monate erstellt.-
 
 ```{r}
 ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
@@ -457,13 +465,17 @@ ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
 
 ```
 
-An den durchschnittlichen Streamzahlen über die verschiedenen Monate lässt sich erkenne, dass die Sommermonate, Verhältnismäßig zu den anderen Monaten, nicht die höchsten Streamzahlen haben. Die höchsten Streamzahlen haben die Monate September, Januar und August. Generell lässt sich erkennen, dass die Streams ab Juli ansteigen und nach dem September bis zum Dezember wieder abfallen. Das könnte darauf zurückzuführen sein, dass die Songs die in den Herbstmonaten veröffentlichen veröffentlichen in der dunkleren Jahreszeit ein Gefühl von Wärme und Geborgenheit geben, nach welchem sich Menschen dann das ganze Jahr über sehnen und diese Songs aus diesem Grund ganzjährig beliebt sind. Diese These wird im folgenden noch einmal genauer untersucht.
+An den durchschnittlichen Streamzahlen über die verschiedenen Monate lässt sich erkenne, dass die Sommermonate, Verhältnismäßig zu den anderen Monaten, nicht die höchsten Streamzahlen haben. Die Monate aber auch keine Ausreißer sind und relativ nah beieinander sind.
 
-## Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)
+Die höchsten Streamzahlen haben die Monate September, Januar und August. Generell lässt sich erkennen, dass die Streams ab Juli ansteigen und nach dem September bis zum Dezember wieder abfallen. Das könnte darauf zurückzuführen sein, dass die Songs die in den Herbstmonaten veröffentlichen veröffentlichen in der dunkleren Jahreszeit ein Gefühl von Wärme und Geborgenheit geben, nach welchem sich Menschen dann das ganze Jahr über sehnen und diese Songs aus diesem Grund ganzjährig beliebt sind.
 
-Die These stellt die Vermutung auf, dass sich ein song besser zum tanzen eignet, wenn er beliebt ist. Die These wurde mit dem Hintergrund aufgestellt, das Songs die in Diskotheken gespielt werden, meistens sehr beliebt sind und sich gut zum Tanzen eignen. Um diese These zu überprüfen, wird im folgenden ein Scatterplot erstellt, der die Beliebtheit eines Songs mit der Tanzbarkeit des Songs vergleicht.
 
-### Scatterplot erstellen
+Abschließend lässt sich sagen, dass sich die Veröffentlichung im Sommer im Vergleich zu anderen Jahreszeiten nicht zu höheren Streamzahlen führt.
+
+
+## These 2: Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)
+
+Die These stellt die Vermutung auf, dass sich ein song besser zum tanzen eignet, wenn er beliebt ist. Die These wurde vor dem Hintergrund aufgestellt, dass Songs die in Diskotheken gespielt werden, meistens sehr beliebt sind und sich auch gut zum Tanzen eignen. Um diese These zu überprüfen, wird im folgenden ein Scatterplot erstellt, der die Beliebtheit eines Songs mit der Tanzbarkeit des Songs vergleicht.
 
 ```{r}
 ggplot(dataset, aes(x = popularity_score, y = danceability_percent)) +
@@ -476,21 +488,25 @@ ggplot(dataset, aes(x = popularity_score, y = danceability_percent)) +
   scale_y_continuous(labels = scales::comma)
 ```
 
-### Korrelationskoeffizient berechnen
+Aus dem Scatterplot lässt sich kein Zusammenhang zwischen der Beliebtheit eines Songs und der Tanzbarkeit des Songs erkennen und auch die eingezeichnete Regressionsgerade zeigt keinen Zusammenhang zwischen den beiden Werten an. Um dies zu bestätigen, wird im folgenden der Korrelationskoeffizient berechnet.
 
 ```{r}
 cor(dataset$popularity_score, dataset$danceability_percent)
 ```
 
-Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahe 0 ist belegt. Die These kann somit nicht bestätigt werden und die Beliebtheit eines Songs hat keinen Einfluss auf die Tanzbarkeit des Songs.
+Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden Werten erkennen. Dies wird auch durch den Korrelationskoeffizienten bestätigt, der nahe 0 ist und *`r cor(dataset$popularity_score, dataset$danceability_percent)`* beträgt. Die These kann somit nicht bestätigt werden und die Beliebtheit eines Songs hat keinen Einfluss auf die Tanzbarkeit des Songs.
+
+Zusammenfassend lässt sich sagen, dass die These nicht bestätigt werden kann und die Beliebtheit eines Songs keinen Einfluss auf die Tanzbarkeit des Songs hat und dass keine Korrelation zwischen den beiden Werten besteht.
 
 ------------------------------------------------------------------------
 
 # Machine Learning Modelle
 
-## Regression (Tim)
+## Machine Learning Modell 1: Regression (Tim)
 
-z-Standardisieren
+In diesem Machine Learning Modell wird versucht die Beliebheit eines Songs anhand der Parameter Tanzbarkeit, Energie, Sprachanteil, Akustik, Instrumentalität, Lebendigkeit und Valenz vorherzusagen.
+
+Zunächst werden die Daten standardisiert.
 
 ```{r}
 relevant_cols <- c("danceability_percent", "energy_percent", "speechiness_percent", "acousticness_percent", "instrumentalness_percent", "liveness_percent", "valence_percent")
@@ -498,7 +514,7 @@ cols_to_scale <- colnames(dataset |>  dplyr::select(all_of(relevant_cols)))
 dataset_scale <- dataset |> mutate_at(cols_to_scale, ~(scale(.) |>  as.vector()))
 ```
 
-Aufteilung in Trainings- und Testset
+Nun werden die Daten in den Trainings- und Testdatensatz aufgeteilt. Um danach eine Valiedirung des Modells auf Basis des Testdatensatzes durchzuführen.
 
 ```{r}
 set.seed(1)
@@ -507,14 +523,14 @@ dataset_train <- training(dataset_split)
 dataset_test  <- testing(dataset_split)
 ```
 
-Auswählen der relevanten Spalten
+Als nächstes werden sowohl der Testdatensatz als auch der Trainingsdatensatz auf die relevanten Spalten reduziert.
 
 ```{r WARNING=FALSE, message=FALSE}
 dataset_train <- dataset_train |> select(popularity_score, relevant_cols)
 dataset_test <- dataset_test |> select(popularity_score, relevant_cols)
 ```
 
-Modell initialisieren:
+Dann wir das Modell initialisiert.
 
 ```{r}
 mlp_dataset_mod <- 
@@ -523,26 +539,91 @@ mlp_dataset_mod <-
     set_engine("nnet")
 ```
 
-Modell trainieren:
+Und danach wird das Modell trainiert.
 
 ```{r}
-mlp_dataset_fit <- 
-    mlp_dataset_mod |> 
+set.seed(1)
+  mlp_dataset_fit <- mlp_dataset_mod |> 
     fit(popularity_score ~ ., data = dataset_train)
+  
+mlp_dataset_fit
 ```
 
-Vorhersage auf den Testdaten:
+Nach dem Training wird das Modell nun auf den Testdatensatzangewendet.
 
 ```{r}
 pred <- predict(mlp_dataset_fit, dataset_test)
 results <- dataset_test |>  dplyr::select(popularity_score) |> bind_cols(pred)
 ```
 
-Interquartilsabstand hinzufügen
+Jetzt wird die Genauigkeit des Modells anhand der Root Mean Squared Error (RMSE) berechnet.
 
 ```{r}
 rmse(data = results, truth = popularity_score, estimate = .pred)
 ```
+Der RMSE beträgt *`r rmse(data = results, truth = popularity_score, estimate = .pred)`* und ist somit relativ hoch. Dies bedeutet, dass das Modell die Beliebtheit eines Songs nicht gut vorhersagen kann. Dies kann auch anhand des Scatterplots dargestellt werden, der die vorhergesagten Werte mit den tatsächlichen Werten vergleicht.
+
+```{r}
+ggplot(results, aes(x = popularity_score, y = .pred)) +
+  geom_point() +
+  labs(title = "Vorhergesagte Beliebtheit eines Songs im Vergleich zur tatsächlichen Beliebtheit",
+       x = "Tatsächliche Beliebtheit",
+       y = "Vorhergesagte Beliebtheit") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::comma)
+```
+Dieser Plot zeigt sehr deutlich, dass die eigentlichen Werte und die vorhergesagten Werte sehr stark voneinander abweichen. Dies bestätigt die Aussage, dass das Modell die Beliebtheit eines Songs nicht gut vorhersagen kann. Außerdem lassen sich zwei "Linien" die parallel zur x-Achse verlaufen erkennen. Diese deuten darauf hin, dass das Modell die Beliebtheit eines Songs auf wenige Werte beschränkt und sich in diesen "Linien" widerspiegelt.
+
+Eine Möglichkeit die Genauigkeit des Modells zu verbessern, ist die Anpassung der Hyperparameter. Hierbei wird die Anzahl der versteckten Einheiten von 5 auf 100 erhöht.
+
+Hier wird das Modell auch wieder initialisiert.
+
+```{r}
+mlp_dataset_mod2 <- 
+    mlp(
+      hidden_units = 100
+    ) |>  
+    set_mode("regression") |> 
+    set_engine("nnet")
+```
+
+Dann wird das Modell trainiert.
+
+```{r}
+set.seed(1)
+  mlp_dataset_fit2 <- mlp_dataset_mod2 |> 
+    fit(popularity_score ~ ., data = dataset_train)
+  
+mlp_dataset_fit2
+```
+
+Und es wird wieder versucht eine Vorhersage auf Basis der Testdaten zu treffen.
+
+```{r}
+pred <- predict(mlp_dataset_fit2, dataset_test)
+results <- dataset_test |>  dplyr::select(popularity_score) |> bind_cols(pred)
+```
+
+Nun wird wie oben der RMSE zur Bestimmung der Genauigkeit herangezogen.
+
+```{r}
+rmse(data = results, truth = popularity_score, estimate = .pred)
+```
+
+
+```{r}
+ggplot(results, aes(x = popularity_score, y = .pred)) +
+  geom_point() +
+  labs(title = "Vorhergesagte Beliebtheit eines Songs im Vergleich zur tatsächlichen Beliebtheit",
+       x = "Tatsächliche Beliebtheit",
+       y = "Vorhergesagte Beliebtheit") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::comma)
+```
+
+Dieser Plot zeigt sehr deutlich, dass die eigentlichen Werte und die vorhergesagten Werte sehr stark voneinander abweichen. Teilweise werde sogar Werte im negativen Bereich vorhergesagt. Posistiv ist jedoch, dass sich nicht mehr so deutlich "Linien" in der Darstellung erkennen lassen. Dies bedeutet, dass das Modell die Beliebtheit eines Songs nicht mehr so stark auf wenige Werte beschränkt. Dennoch lassen sich einige vage "Linien" erkennen, wie z.B. um den vorhergesagten Wert 500.
+
+Abschließend lässt sich damit sagen, dass sich der Beliebtheitsscore nicht gut auf Basis der Tanzbarkeit, Energie, Sprachanteil, Akustik, Instrumentalität, Lebendigkeit und Valenz vorhersagen lässt. Auch die Erhöhung der Hidden Layers hat keine Verbesserung in der Genauigkeit gebracht.
 
 ------------------------------------------------------------------------
 
@@ -572,6 +653,7 @@ Markus: <br>
 - Kapitel 9, Ausblick <br>
 
 Tim: <br>
+- Kapitel 5, Berechnung des Beliebtheitsscores <br>
 - Kapitel 4, Bereinigung der Daten <br>
 - Kapitel 6.1, These 1 <br>
 - Kapitel 6.2, These 2 <br>
