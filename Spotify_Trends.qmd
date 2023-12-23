@@ -1,23 +1,64 @@
 ---
-title: Spotify Trends
+title: Spotify Trends - Was macht Songs beliebt?
+title-block-banner: true
+title-block-style: default
+title-block-banner-color: white
 author:
-  - name: Markus Janke
+  - name: Markus Janke,
   - name: Tim Beyer
 editor: visual
 lang: de
 format:
   html:
-    theme: zephyr
-    code-line-numbers: true
+    theme: lux
     toc: true
-    toc-depth: 3
+    toc_float: true
+    number-sections: true
+    code-line-numbers: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Code anzeigen"
+date: 2023-12-23
 ---
 
-# 1 Vorbereitung
+# Einleitung (Markus)
 
-### 1.1 Pakete laden
+# Vorbereitung (Markus, Tim)
 
-```{r, message=FALSE}
+Im folgenden Kapitel, werden vorbereitende Maßnahmen getroffen, wie die Installation der benötigten Pakete, das Laden der Pakete und das Einlesen der Daten. 
+
+Die benötigten Pakete werden im Hintergrund installiert und geladen, damit diese im weiteren Verlauf verwendet werden können und nicht manuell installiert werden müssen.
+```{r, message=FALSE, include = FALSE}
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+if (!requireNamespace("tidymodels", quietly = TRUE)) {
+  install.packages("tidymodels")
+}
+if (!requireNamespace("dials", quietly = TRUE)) {
+  install.packages("dials")
+}
+if (!requireNamespace("randomForest", quietly = TRUE)) {
+  install.packages("randomForest")
+}
+if (!requireNamespace("rpart.plot", quietly = TRUE)) {
+  install.packages("rpart.plot")
+}
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr")
+}
+if (!requireNamespace("readxl", quietly = TRUE)) {
+  install.packages("readxl")
+}
+if (!requireNamespace("skimr", quietly = TRUE)) {
+  install.packages("skimr")
+}
+```
+
+```{r, message=FALSE, include = FALSE}
 library(tidyverse)
 library(tidymodels)
 library(randomForest)
@@ -25,89 +66,217 @@ library(rpart.plot)
 library(dials)
 library(explore)
 library(ggplot2)
+library(dplyr)
+library(readxl)
+library(skimr)
 ```
 
-### 1.2 Arbeitsumgebung festlegen
+Nun werden die Daten eingelesen und in der Variable "dataset" gespeichert, auf welche in den folgenden Kapitel zugegriffen wird. Die Daten werden als Excel-Datei eingelesen, da diese im Vergleich zu CSV-Dateien die Spalten in den korrekten . 
 
-```{r}
-setwd(".")  # Arbeitsverzeichnis setzen
-getwd()     # Arbeitsverzeichnis ausgeben
-
-```
-
-### 1.3 Daten einlesen
-
-```{r}
-dataset <- read_csv("spotify-2023.csv")
+```{r, message=FALSE}
+dataset <- read_excel("spotify-2023.xlsx")
 ```
 
 ------------------------------------------------------------------------
 
-# 2 Überblick über die Daten
+# Überblick über die Daten (Markus, Tim)
 
-### 2.1 Dimensionen des Datensatzes
+In diesem Kapitel schaffen wir uns einen Überblick über die für diese Betrachtung relevanten Daten. Der Überblick dient dazu die Daten besser zu verstehen und die Daten auf eventuelle Fehler oder Unvollständigkeiten zu untersuchen. Die möglichen Fehler und Unvollstänmdigkeiten der Daten werden dann in Kapitel 3 behoben.
+
+Zunächst betrachten wir hier die Dimensionen des Datensatzes um festzustellen, wie viele Zeilen und Spalten enthalten sind.
 
 ```{r}
 dim(dataset)
 ```
 
-### 2.2 Struktur des Datensatzes
+Der Datensatz enthält **`r dim(dataset)[1]`** Spalten und **`r dim(dataset)[2]`** Zeilen. Da der Datensatz noch nicht bereinigt wurde, gilt es nun zu prüfen, ob in den Daten fehlende Werte, also NAs vorhanden sind. 
 
 ```{r}
 describe_tbl(dataset)
 ```
+Der Datensatz enthält nach der describe_tbl Funktion 137 NAs, die sich auf insgesamt 3 Spalten auteilend diese NAs werden in Kapitel 3 bereinigt.
 
-### 2.3 Spaltennamen des Datensatzes
+Um einen weiteren Überblick über die Daten zu erhalten, werden die Spalten Namen aufgelistet.
 
 ```{r}
 colnames(dataset)
 ```
+Es lässt sich erkennen, dass einige der Spalten "%", siehe z.B. *`r colnames(dataset)[18]`* oder *`r colnames(dataset)[19]`*,  was bei späteren Codeausführungen zu Problemen führen kann. Daher werden die Spaltennamen in Kapitel 3 bereinigt. Außerdem ist zu bermerken, dass die Spaltennamen zwar in einem gewissen Maße aussagekräftig über die Art der Daten, die sie beinhalten trotzdem könnten die Bennenung der Spalten in einigen Fällen zu Verwirrung oder Verwechslungen führen.Um dies zu verhindern und um einen weiteren Überblick über Bedeutung der einzelnen Beonachtungen zu erhalten, werden die Spalten Namen, der Datentyp einer Spalte und die Beschreibung der Spalte in einer Tabelle dargestellt.
 
-### 2.4 Zusammenfassung für jede Spalte anzeigen
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Spaltenname</th>
+      <th scope="col">Datentyp</th>
+      <th scope="col">Beschreibung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <td>track_name</td>
+      <td>character</td>
+      <td>Name des Songs</td>
+    </tr>
+    <tr class="table-primary">
+      <td>artist(s)_name</td>
+      <td>character</td>
+      <td>Name(n) der Künstler:innen die an einem Song mitgewirkt haben</td>
+    </tr>
+    <tr class="table-active">
+      <td>artist_count</td>
+      <td>numeric</td>
+      <td>Anzahl der Künstler:innen die an einem Song mitgewirkt haben</td>
+    </tr>
+    <tr class="table-primary">
+      <td>released_year</td>
+      <td>numeric</td>
+      <td>Jahr der Veröffentlichung</td>
+    </tr>
+    <tr class="table-active">
+      <td>released_month</td>
+      <td>numeric</td>
+      <td>Monat der Veröffentlichung</td>
+    </tr>
+    <tr class="table-primary">
+      <td>released_day</td>
+      <td>numeric</td>
+      <td>Tag des Monats der Veröffentlichung</td>
+    </tr>
+    <tr class="table-active">
+      <td>in_spotify_playlists</td>
+      <td>numeric</td>
+      <td>Anzahl der Spotify Playlisten in denen ein Song enthalten ist</td>
+    </tr>
+    <tr class="table-primary">
+      <td>in_spotify_charts</td>
+      <td>numeric</td>
+      <td>Präsenz und Rang in den Spotify Charts</td>
+    </tr>
+    <tr class="table-active">
+      <td>streams</td>
+      <td>numeric</td>
+      <td>Gesamte Anzahl der Streams auf Spotify</td>
+    </tr>
+    <tr class="table-primary">
+      <td>in_apple_playlists</td>
+      <td>numeric</td>
+      <td>Anzahl der Apple Music Playlisten in denen ein Song enthalten ist</td>
+    </tr>
+    <tr class="table-active">
+      <td>in_apple_charts</td>
+      <td>numeric</td>
+      <td>Präsenz und Rang in den Apple Music Charts</td>
+    </tr>
+    <tr class="table-primary">
+      <td>in_deezer_playlists</td>
+      <td>numeric</td>
+      <td>Anzahl der Deezer Playlisten in denen ein Song enthalten ist</td>
+    </tr>
+    <tr class="table-active">
+      <td>in_deezer_charts</td>
+      <td>numeric</td>
+      <td>Präsenz und Rang in den Deezer Charts</td>
+    </tr>
+    <tr class="table-primary">
+      <td>in_shazam_charts</td>
+      <td>numeric</td>
+      <td>Präsenz und Rang in den Shazam Charts</td>
+    </tr>
+    <tr class="table-active">
+      <td>bpm</td>
+      <td>numeric</td>
+      <td>Beats pro Minute (Eine Einheit für die Geschwindigkeit von Songs)</td>
+    </tr>
+    <tr class="table-primary">
+      <td>key</td>
+      <td>character</td>
+      <td>Tonart des Songs</td>
+    </tr>
+    <tr class="table-active">
+      <td>mode</td>
+      <td>character</td>
+      <td>Tongeschlecht des Songs</td>
+    </tr>
+    <tr class="table-primary">
+      <td>danceability_%</td>
+      <td>numeric</td>
+      <td>prozentuelle Angabe, die angibt wie gut sich ein Song zum Tanzen eignet</td>
+    </tr>
+    <tr class="table-active">
+      <td>valence_%</td>
+      <td>numeric</td>
+      <td>Positivität des musikalischen Inhalt des Songs</td>
+    </tr>
+    <tr class="table-primary">
+      <td>energy_%</td>
+      <td>numeric</td>
+      <td>Das wahrgenommene Energielevel eines Songs</td>
+    </tr>
+    <tr class="table-active">
+      <td>acousticness_%</td>
+      <td>numeric</td>
+      <td>Anteil an akustischem Klang in einem Song</td>
+    </tr>
+    <tr class="table-primary">
+      <td>instrumentalness_%</td>
+      <td>numeric</td>
+      <td>Instrumentalische Anteil eines Songs</td>
+    </tr>
+    <tr class="table-active">
+      <td>liveness_%</td>
+      <td>numeric</td>
+      <td>Präsenz von Live-Performance Elementen in einem Song</td>
+    </tr>
+    <tr class="table-primary">
+      <td>speechiness_%</td>
+      <td>numeric</td>
+      <td>Anteil an gesprochenen Wörtern in einem Song</td>
+    </tr>
+  </tbody>
+</table>
+
+Um abschließend noch ein gesamtes Bild des Datensatzes zu bekommen, werden alle Spalten zusammengefasst.
 
 ```{r}
 summary(dataset)
 ```
+In der Zusammenfassung lässt sich schon erkennen, wie weit die Wertebereiche der Spalten aussehen. Außerden lassen sich hier auch schon 50 NAs in der Spalte in_shazam_charts erkennen, sowie ein NA in der Spalte streams. Zu der oben festgestellten Anzahl von NAs besteht hier eine große Diskrepanz, die wir genauer betrachten müssen.
+Darüber hinaus ist festzustellen, dass die Spalten mit dem Datentyp character nicht in der Zusammenfassung auftauchen. Dies liegt daran, dass diese Spalten nicht numerisch sind. Um diese Spalten dennoch zu betrachten, wird die Funktion skimr verwendet, da diese eine ausführlichere Zusammendassung des Datensatzes bietet.
+
+```{r}
+skimr::skim(dataset)
+```
+
+Die Methode skimr erstellt nun mehrere Ausgaben und nimmt dabei einige der oben schon Betrachtungen mit auf, wie die Anzahl der Zeilen und Spalten. Des Weiteren betrachtet die Methode auch die Spalten mit dem Datentyp character im Detail, wodurch sich feststellen lässt, dass in der Spalte key noch 95 NAs versteckt waren. Insgesamt kommen wir mit den NAs aus streams und in_shazam_charts auf 146 NAs, was von den oben ausgegebenen 137 NAs abweicht. Es wurde versucht festzustelle, woran dieser Unterschied liegen könnte, jedoch konnte keine Erklärung gefunden werden. Nach manuellem Nachzählen gehen wir davon aus, dass die Anzahl der NAs in der Zusammenfassung von skimr korrekt ist und die Anzahl der NAs in der Zusammenfassung von describe_tbl fehlerhaft ist, was aus unterschiedliche Programmierung bei der Erkennung von NAs zurückzuführen sein kann.
+Die Erkenntnisse in diesem Kapitel bilden damit auch die Grundlage für die Bereinigung der Daten, welche im nächsten Kapitel durchgeführt wird.
 
 ------------------------------------------------------------------------
 
-# 3 Bereinigung der Daten
+# Bereinigung der Daten (Tim)
 
-### 3.1 Bearbeiten der Spalte streams, sodass diese als numerischer Wert interpretiert wird
+In Kapitel 2 Überblick über die Daten wurden 146 NAs und mehrere Bennenungsfehler festgestellt, diese werden im folgenden bereinigt. Der Grund dafür ist, dass der Datensatz für die weitere Betrachtung möglichst vollständig sein soll und NAs und Bennenungsfehler die Auswertung verfälschen könnten.
 
-Die Zusammenfassung der Spalten zeigt, dass "streams" als character erkannt wurde, da dieser Wert jedoch numerisch ist sollte dieser auch als solcher interpretiert werden.
-
-```{r}
-dataset$streams <- as.numeric(dataset$streams)
-```
-
-### 3.2 Löschen des Datensatzes ohne eintrag in streams
-
-Durch die Umwandlung von character zu numeric wurden NAs erzeugt, dieser Datensatz wird gelöscht, da Streams die für die genaue Betrachtung relevanteste Spalte ist und ohne diese Spalte keine qualitativen Aussagen getroffen werden können. Des Weiteren betrifft dies nur einen Wert, wodurch die Datenmenge nicht signifikant verkleinert wird.
+In der Spalte streams ist ein NA enthalten, da Streams die wichtigste und aussagekräftigste Spalte ist, wird diese Beobachtung gelöscht. Es gibt leider keine Möglichkeit, dass diese Beobachtung so aufbereitet werden kann, dass sie für die weitere Betrachtung relevant ist. Da sowohl das Einsetzen des Mittelwerts als auch das Schätzen des Werts im weiteren Verlauf zu Verfälschungen führen könnten.
 
 ```{r}
 dataset <- dataset[!is.na(dataset$streams), ]
 ```
 
-### 3.3 Löschen der Spalte in_shazam_charts
 
-Darüber hinaus sind in der Spalte "in_shazam_charts" einige NAs enthalten. Dies kann darauf zurückzuführen sein, dass die entsprechenden Songs nicht auf Shazam verfügbar sind oder dass Shazam nicht die Rechte für das Abspielen des Songs hat. Da Shazam insgesamt ein nicht sehr beliebter Musikstreamingsienst ist, wird diese Spalte entfernt, da sie für die weitere Betrachtung nicht relevant ist.
+Neben der Spalte streams hat auch die Spalte in_shazam_charts NAs, in diesem Fall soagr 50. Dies kann darauf zurückzuführen sein, dass die entsprechenden Songs auf Shazam nicht verfügbar sind, da Shazam beispielsweise nicht die Rechte für das Abspielen des Songs hat. Da Shazam insgesamt ein nicht sehr beliebter Musikstreamingsienst ist, wird diese Spalte entfernt, da sie für die weitere Betrachtung nicht relevant ist.
 
 ```{r}
 dataset$in_shazam_charts <- NULL
 ```
 
-### 3.4 Löschen der Spalte key:
-
-In der Spalte "key" sind etwa 10% der Werte NAs. Da diese Spalte dadurch nicht aussagekräftig ist, wird diese ebenfalls entfernt.
+Auch in der Spalte key befinden sich einige NAs, hier ist die Anzahl so hoch, dass mehr als 10% der Beobachtungen hier ein NA haben. Dies führt dazu, dass diese Spalte nicht aussagekräftig ist und für die weitere Betrachtung nicht relevant ist, aus diesem Grund wierd die Spalte ebenfalls entfernt.
 
 ```{r}
 dataset$key <- NULL
 ```
 
-### 3.5 Umbennen der Spalten, die ein "%" enthalten
 
-Die Spalten "danceability", "energy", "speechiness", "acousticness", "instrumentalness", "liveness"und "valence" enthalten ein "%". Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden.
+Wie in der Betrachtung der Daten festgestellt, enthalten die Spalten "danceability", "energy", "speechiness", "acousticness", "instrumentalness", "liveness"und "valence" enthalten ein "%". Dies kann zu Problemen bei der weiteren Verarbeitung führen, weshalb diese Spalten umbenannt werden. Um die Aussage der Spaltennamen nicht zu verändern, wir das Prozentzeichen durch das Wort Prozent ersetzt. Die Entscheidung auf des englische Wort für Prozent ist gefallen, da alle restlichen Spaltennamen ebenfalls auf Englisch sind und diese Namenskonvention beibehalten werden soll.
 
 ```{r}
 colnames(dataset)[colnames(dataset) == "danceability_%"] <- "danceability_percent"
@@ -119,65 +288,91 @@ colnames(dataset)[colnames(dataset) == "liveness_%"] <- "liveness_percent"
 colnames(dataset)[colnames(dataset) == "valence_%"] <- "valence_percent"
 ```
 
-### 3.6 Zusammenfassung des bereinigten Datensatzes
+Um eine Übersicht über den bereinigten Datensatz zu bekommen, wird dieser im folgenden noch einmal zusammengefasst. Dies dient vor Allem der Überprüfung, ob alle NAs entfernt wurden und die Spaltennamen korrekt geändert wurden. Außerdem ermöglicht uns die erneute Zusammenfassung hier noch einmal einen Vergleich zum ursprünglichen Datensatz aus dem Kapitel Überblick über die Daten zu ziehen.
 
 ```{r}
-summary(dataset)
+skimr::skim(dataset)
 ```
+
+In der Zusammenfassung lässt sich direkt erkennen, dass eine Reihe, sowie 2 Spalten entfernt wurden, was den oben vorgenommenen Änderungen entspricht. Außerdem lässt sich erkennen, dass die Anzahl der NAs nun 0 beträgt. Des Weiteren sind die Spaltennamen nun auch korrekt aufgeführt und enthalten keine Sonderzeichen mehr. Damit ist der Datensatz bereinigt und kann für die weitere Betrachtung verwendet werden.
 
 ------------------------------------------------------------------------
 
-# 4 Beliebtheitsscore berechnen
+# Berechnung eines Beliebtheitsscores (Markus, Tim)
 
-Um die Beliebheit der Songs über mehrere Werte beurteilen zu können, wird ein Beliebheitsscore berechnet. Dieser setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen.
+Da für einige der Thesen, sowie der Machine Learning Modelle soll die Beliebtheit eines Songs betrachtet werden. Dies führt zu der Problemstellung, dass mehrere Werte eine Aussage über die Beliebheit eines Songs treffen. Dabei ist es so, dass einige Werte eine Starke aussage auf die Beliebtheit treffen können, andere Werte hingegen treffen nur eine schwächere Aussage. Um ein Beispiel heranzuziehen, die Anzahl der Streams kann eine höhere Aussage über die Beliebtheit treffen, als die Platzierung in den Charts eines Musikstreamingdienstes. Dies leigt daran, dass die Anzahl der Streams eine absolute Größe und eine Aussage trifft wie oft ein Song gehört wird. Die Platzierung und Präsenz in den Charts hingegen ist eine relative Größe, da sie nur die Platzierung im Vergleich zu anderen Songs angibt. Das Ziel ist es, jedoch jetzt eine Kennzahl, also einen Beliebtheitsscore einzuführen, der die verschiedenen Werte zusammenfasst und eine Aussage über die Beliebtheit eines Songs trifft. Der Beliebtheitsscore setzt sich aus den Streams und den Charts der verschiedenen Streamingdienste zusammen. Um den Unterschiedlichen Aussagekräften gerecht zu werden wird für jeden Parameter, der in die Berechnung einfließt eine Gewichtung vorgenommen, die die Aussagekraft des jewiligen Parameters widerspiegelt.
 
-### 4.1 Gewichtungen
+Zudem sollte in Betracht gezogen werden, dass ein Song der vor 2023 oder Anfang des Jahres 2023 veröffentlicht wurde, einen Vorteil gegenüber Songs hat, die später im Jahr 2023 veröffentlicht wurden. Dies liegt daran, dass Songs, die früher veröffentlicht wurden, mehr Zeit hatten, um Streams zu generieren und in den Charts zu erscheinen. Um diesen Vorteil auszugleichen, wird der Beliebtheitsscore durch die Tage geteilt, die der entsprechende Song in diesem Jahr gestreamt werden konnte. Dadurch ergibt sich quasi ein Beliebtheitsscore pro Tag.
 
-Die Gewichtung der einzelnen Werte, die in die Bewertung des Beliebtheitsscores einfließen, ergibt sich aus der Beliebtheit der verschiedenen Streamingdienste. Spotify ist der größte Streamingdienst und wird deshalb am stärksten gewichtet. Die anderen Streamingdienste werden entsprechend ihrer Beliebtheit gewichtet. Apple Music ist nach Spotify einer der beliebtesten Streamingdienste und wird deshalb am zweitstärksten gewichtet. Deezer ist in Untersuchungen sehr weit hinter Spotify und Apple, was in der Gewichtung deutlich wird. Orientiert wurde sich hierbei an der Studie von Statista, welche Musikstreamingdienste weltweit am häufigsten genutzt werden. (https://www.statista.com/chart/20826/music-streaming-services-with-most-subscribers-global-fipp/) In der Statistik sind mehr Streamingdienste zu sehen als hier untersucht werden, dies liegt daran, dass diese nicht erfasst wurden oder, dass kein Zugriff auf die Daten besteht und diese somit nicht aufgenommen werden konnten. Genauer wird darauf noch im Ausblick und in den Grenzen des Projekts eingegangen.
+Aus den oben genannten Anforderungen an den Beliebtheitsscore ergibt sich folgende Formel:
+
+<img class="boxContent" src="./pictures/popularityScore.png" height="126" width="600"/> <br>
+<figcaption class="boxContent" >Formel zur Berechnung des Beliebtheitsscores</figcaption> <br>
+
+Zunächst werden die Werte der Charts der verschiedenenen Streamingdienste unterschiedlich gewichtet. Die Gewichtung der einzelnen Werte, die in die Bewertung des Beliebtheitsscores einfließen, ergibt sich aus der Beliebtheit der verschiedenen Streamingdienste. Spotify ist der größte Streamingdienst und wird deshalb am stärksten gewichtet. Die anderen Streamingdienste werden entsprechend ihrer Beliebtheit gewichtet. Apple Music ist nach Spotify einer der beliebtesten Streamingdienste und wird deshalb am zweitstärksten gewichtet. Deezer ist in Untersuchungen sehr weit hinter Spotify und Apple, was in der Gewichtung deutlich wird. Orientiert wurde sich hierbei an der Studie von Statista, welche Musikstreamingdienste weltweit am häufigsten genutzt werden. Die detailierte Gewichtung wurde anhand einer Statistik aus dem Jahr 2020 vorgenommen (https://www.statista.com/chart/20826/music-streaming-services-with-most-subscribers-global-fipp/). Die Statistik zeigt die verschiedenen Musikstreamingdienste und die insgesamten Abonennt:innen zum Stand im November 2019. In der Statistik sind mehr Streamingdienste zu sehen als hier untersucht werden, dies liegt daran, dass diese nicht erfasst wurden oder, dass kein Zugriff auf die Daten besteht und diese somit nicht aufgenommen werden konnten. Genauer wird darauf  im Ausblick und in den Grenzen des Projekts eingegangen.
 
 ```{r}
 w_streams <- 1
-w_spotify_charts <- -2  
-w_deezer_charts <- -1.5
-w_apple_charts <- -1.3
+w_spotify_charts <- 14.29
+w_deezer_charts <- 1
+w_apple_charts <- 8.57
 ```
 
-### 4.2 Berechnung des Beliebheitsscores
-
-Bie der Berechnung des Beliebtheitssscores wird zunächst der ursprüngliche Wert der einzelnen Spalten mit der entsprechenden Gewichtung multipliziert. Anschließend werden die einzelnen Werte addiert und durch die Anzahl der Spalten geteilt, um den Durchschnitt zu erhalten.
+Um die oben beschriebene Vergleichbarkeit zwischen den verschiedenen Beliebtheitsscore je nach Veröffentlichkeitsdatum herzustellen werden zunächt die Tage ermittelt, die ein Song in 2023 streambar war. Dazu werden die Tage berechnet die zwischen der Erstellung des Datensatzes und der Veröffentlichung des Songs liegen. Außerdem werden die Tage berechnet, die zwischen der Veröffentlichung des Songs und dem Beginn dieses Jahres liegen, diese werden besonders im nächsten Schritt benötigt. Anschließend wird sofern der Song vor diesem Jahr veröffentlicht worden ist, die Tage von der Veröffentlichung bis zum Beginn des Jahres (daysFromReleaseToThisYear) von den Tagen seit der Veröffentlichung bis zum Stichtag (daysFromRelease) abgezogen. Dadirch ergibt sich eine maximale Anzahl von 212 Tagen, die ein Song, der vor diesem Jahr veröffentlicht wurde dieses Jahr gestreamt werden konnte, was der Zeit zwischen dem 1.1.2023 und dem 1.8.2023 entspricht. Songs, die am oder nach dem 01.01.2023 veröffentlicht wurden, fließen direkt mit den Tagen seit der Veröffentlichung (daysFromRelease) mit ein.
 
 ```{r}
-dataset$popularity_score <- (
+
+releaseDate <- paste(dataset$released_day, dataset$released_month, dataset$released_year, sep=".")
+
+daysFromRelease <- round((difftime(strptime("01.08.2023", format = "%d.%m.%Y"),strptime(releaseDate, format = "%d.%m.%Y"))))
+
+daysFromReleaseToThisYear <- round((difftime(strptime("01.01.2023", format = "%d.%m.%Y"),strptime(releaseDate, format = "%d.%m.%Y"))))
+
+streamableDays2023 <- ifelse(daysFromRelease>212, daysFromRelease-daysFromReleaseToThisYear, daysFromRelease)
+
+minStreamableDays <- min(streamableDays2023)
+maxStreamableDays <- max(streamableDays2023)
+```
+
+Dadurch ergibt sich eine Spanne von *`r minStreamableDays`* bis *`r maxStreamableDays`*. Dies zeigt, dass wirklich maximal die Tage, bis zum 01.08.2023 gezählt wurden. Damit haben wir die Anzahl der streambaren Tage in 2023 für jeden Song ermittelt. 
+
+Dies führt uns zur entgültigen Berechnung des Beliebtheitsscores. Bei der Berechnung des Beliebtheitssscores wird zunächst der ursprüngliche Wert der einzelnen Spalten mit der entsprechenden Gewichtung multipliziert. Anschließend werden die einzelnen Werte addiert und durch die Summe der Einträge in den Spalten geteilt. Danach wird noch einmal du die oben berechnete Anzahl an streambaren Tagen geteilt um so die Vergleichbarkeit zwischen den Songs zu gewährleisten.
+
+```{r}
+
+dataset$popularity_score <- (((
   w_streams * dataset$streams +
   w_spotify_charts * dataset$in_spotify_charts +
   w_deezer_charts * dataset$in_deezer_charts +
   w_apple_charts * dataset$in_apple_charts
-) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts")]))
+) / sum(!is.na(dataset[, c("streams", "in_spotify_charts", "in_deezer_charts", "in_apple_charts")]))) / streamableDays2023)
 ```
+
+Die Berechnung des Beliebtheitsscores ist nun abgeschlossen und es kann mit der weiteren Betrachtung des Datensatzes durch die Thesen fortgefahren werden.
 
 ------------------------------------------------------------------------
 
-# 5 Thesen
+# Thesen
 
-### 5.1 Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)
+## Die Veröffentlichung im Sommer führt zu höheren Streamzahlen (Tim)
 
 Die These stellt die Vermutung auf, dass die Veröffentlichung im Sommer zu höheren Streamzahlen führt. Dies könnte daran leigen, dass im Sommer veröffentlichte Songs oft ein Sommerhit werden könnten und somit häufiger gestreamt werden. Außerdem vermitteln Songs die im Sommer veröffentlicht werden, häufig ein sommerliches Gefühl, wodurch diese Songs auch ganzjährig häufiger gestreamt werden.
 
 Um diese These zu überprüfen, wird zunächst der Durchschnitt der Streams im Sommer berechnet. Anschließend wird der Durchschnitt der Streams in anderen Jahreszeiten berechnet. Diese beiden Werte werden anschließend miteinander verglichen und in einem Balkendiagramm graphisch gegenüber gestellt.
 
-#### 5.1.1 Durchschnittliche Streams im Sommer
+### Durchschnittliche Streams im Sommer
 
 ```{r}
 mean_streams_summer <- mean(dataset$streams[dataset$released_month %in% c(6, 7, 8)])
 ```
 
-#### 5.1.2 Durchschnittliche Streams im Sommer
+### Durchschnittliche Streams im Sommer
 
 ```{r}
 mean_streams_other_seasons <- mean(dataset$streams[dataset$released_month %in% c(1, 2, 3, 4, 5, 9, 10, 11, 12)])
 ```
 
-#### 5.1.3 Vergleich der beiden Werte
+### Vergleich der beiden Werte
 
 ```{r}
 mean_streams_summer / mean_streams_other_seasons
@@ -192,7 +387,7 @@ mean_streams_other_seasons
 
 Die Werte der anderen Jahreszeiten sind etwa 50.000 Streams höher als die Werte der im Sommer veröffentlichten Songs.Um den Unterschied einmal graphisch darzustellen, wird ein Balkendiagramm erstellt.
 
-#### 5.1.5 Daten für das Balkendiagramm vorbereiten
+### Daten für das Balkendiagramm vorbereiten
 
 ```{r}
 bar_data <- data.frame(
@@ -201,7 +396,7 @@ bar_data <- data.frame(
 )
 ```
 
-#### 5.1.6 Balkendiagramm über die durchschnittlichen Streams im Sommer vs. andere Jahreszeiten erstellen
+### Balkendiagramm über die durchschnittlichen Streams im Sommer vs. andere Jahreszeiten erstellen
 
 ```{r}
 ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
@@ -216,7 +411,7 @@ ggplot(bar_data, aes(x = Season, y = Mean_Streams, fill = Season)) +
 
 Im Balkendiagramm lässt sich erkennen, dass die Stream im Sommer im Durchschnitt unter den Streams in anderen Jahreszeiten liegen. Dies spricht wie oben erwähnt gegen die aufgestellte These. Jedoch ist zu bemerken, dass der Unterschied nicht sehr groß ist. Die Streamzahlen im Sommer sind nur etwa 50.000 Streams niedriger als die Streamzahlen in anderen Jahreszeiten. Dies ist ein Unterschied von etwa 1,5%. Dieser Unterschied ist nicht sehr groß und könnte auch durch Zufall entstanden sein. Deshalb wird im folgenden noch einmal genauer auf die Streamzahlen in den einzelnen Monaten geschaut.
 
-#### 5.1.7 Durschschnittliche Streams über die verschiedenen Monate berechnen
+### Durschschnittliche Streams über die verschiedenen Monate berechnen
 
 ```{r}
 mean_streams_january <- mean(dataset$streams[dataset$released_month %in% c(1)])
@@ -233,7 +428,7 @@ mean_streams_november <- mean(dataset$streams[dataset$released_month %in% c(11)]
 mean_streams_dezember <- mean(dataset$streams[dataset$released_month %in% c(12)])
 ```
 
-#### 5.1.8 Daten für das Balkendiagramm vorbereiten
+### Daten für das Balkendiagramm vorbereiten
 
 ```{r}
 bar_data_months <- data.frame(
@@ -242,13 +437,13 @@ bar_data_months <- data.frame(
 )
 ```
 
-#### 5.1.9 chronologische Ordnung der Daten
+### chronologische Ordnung der Daten
 
 ```{r}
 bar_data_months$Month <- factor(bar_data_months$Month, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Dezember"))
 ```
 
-#### 5.1.10 Balkendiagramm erstellen über die durchschnittlichen Streams über die verschiedenen Monate
+### Balkendiagramm erstellen über die durchschnittlichen Streams über die verschiedenen Monate
 
 ```{r}
 ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
@@ -264,11 +459,11 @@ ggplot(bar_data_months, aes(x = Month, y = Mean_Streams, fill = Month)) +
 
 An den durchschnittlichen Streamzahlen über die verschiedenen Monate lässt sich erkenne, dass die Sommermonate, Verhältnismäßig zu den anderen Monaten, nicht die höchsten Streamzahlen haben. Die höchsten Streamzahlen haben die Monate September, Januar und August. Generell lässt sich erkennen, dass die Streams ab Juli ansteigen und nach dem September bis zum Dezember wieder abfallen. Das könnte darauf zurückzuführen sein, dass die Songs die in den Herbstmonaten veröffentlichen veröffentlichen in der dunkleren Jahreszeit ein Gefühl von Wärme und Geborgenheit geben, nach welchem sich Menschen dann das ganze Jahr über sehnen und diese Songs aus diesem Grund ganzjährig beliebt sind. Diese These wird im folgenden noch einmal genauer untersucht.
 
-### 5.2 Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)
+## Je beliebter ein Song ist, desto besser lässt sich zu ihm Tanzen (Tim)
 
-Die These stellt die Vermutung auf, dass sich ein song besser tanzen eignet, wenn er beliebt ist. Die These wurde mit dem Hintergrund aufgestellt, das Songs die in Diskotheken gespielt werden, meistens sehr beliebt sind und sich gut zum Tanzen eignen. Um diese These zu überprüfen, wird im folgenden ein Scatterplot erstellt, der die Beliebtheit eines Songs mit der Tanzbarkeit des Songs vergleicht.
+Die These stellt die Vermutung auf, dass sich ein song besser zum tanzen eignet, wenn er beliebt ist. Die These wurde mit dem Hintergrund aufgestellt, das Songs die in Diskotheken gespielt werden, meistens sehr beliebt sind und sich gut zum Tanzen eignen. Um diese These zu überprüfen, wird im folgenden ein Scatterplot erstellt, der die Beliebtheit eines Songs mit der Tanzbarkeit des Songs vergleicht.
 
-#### 5.2.1 Scatterplot erstellen
+### Scatterplot erstellen
 
 ```{r}
 ggplot(dataset, aes(x = popularity_score, y = danceability_percent)) +
@@ -281,7 +476,7 @@ ggplot(dataset, aes(x = popularity_score, y = danceability_percent)) +
   scale_y_continuous(labels = scales::comma)
 ```
 
-#### 5.2.2 Korrelationskoeffizient berechnen
+### Korrelationskoeffizient berechnen
 
 ```{r}
 cor(dataset$popularity_score, dataset$danceability_percent)
@@ -291,22 +486,22 @@ Aus der linearen Regression lässt sich kein Zusammenhang zwischen den beiden We
 
 ------------------------------------------------------------------------
 
-# 6 Machine Learning Modelle
+# Machine Learning Modelle
 
-### 6.1 Regression
+## Regression (Tim)
 
 z-Standardisieren
 
 ```{r}
 relevant_cols <- c("danceability_percent", "energy_percent", "speechiness_percent", "acousticness_percent", "instrumentalness_percent", "liveness_percent", "valence_percent")
-cols_to_scale <- colnames(dataset |>  dplyr::select(relevant_cols))
+cols_to_scale <- colnames(dataset |>  dplyr::select(all_of(relevant_cols)))
 dataset_scale <- dataset |> mutate_at(cols_to_scale, ~(scale(.) |>  as.vector()))
 ```
 
 Aufteilung in Trainings- und Testset
 
 ```{r}
-set.seed(2023)
+set.seed(1)
 dataset_split <- initial_split(dataset_scale, prop = 0.8, strata = popularity_score)
 dataset_train <- training(dataset_split)
 dataset_test  <- testing(dataset_split)
@@ -314,10 +509,9 @@ dataset_test  <- testing(dataset_split)
 
 Auswählen der relevanten Spalten
 
-```{r}
-dataset_train <- dataset_train %>% select(popularity_score, relevant_cols)
-dataset_test <- dataset_test %>% select(popularity_score, relevant_cols)
-
+```{r WARNING=FALSE, message=FALSE}
+dataset_train <- dataset_train |> select(popularity_score, relevant_cols)
+dataset_test <- dataset_test |> select(popularity_score, relevant_cols)
 ```
 
 Modell initialisieren:
@@ -341,7 +535,7 @@ Vorhersage auf den Testdaten:
 
 ```{r}
 pred <- predict(mlp_dataset_fit, dataset_test)
-results <- dataset_test |>  dplyr::select(popularity_score) %>% bind_cols(pred)
+results <- dataset_test |>  dplyr::select(popularity_score) |> bind_cols(pred)
 ```
 
 Interquartilsabstand hinzufügen
@@ -352,30 +546,66 @@ rmse(data = results, truth = popularity_score, estimate = .pred)
 
 ------------------------------------------------------------------------
 
-# 7 Grenzen des Projekts
+# Grenzen des Projekts (Markus)
 
 grenzen
 
+Von oben aus dem Text :D
+In der Statistik sind mehr Streamingdienste zu sehen als hier untersucht werden, dies liegt daran, dass diese nicht erfasst wurden oder, dass kein Zugriff auf die Daten besteht und diese somit nicht aufgenommen werden konnten. Genauer wird darauf noch im Ausblick und in den Grenzen des Projekts eingegangen.
+
 ------------------------------------------------------------------------
 
-# 8 Ausblick
+# Ausblick (Markus)
 
 ausblick
 
 ------------------------------------------------------------------------
 
+# Aufgabenverteilung
+
+Markus: <br>
+- Kapitel 1, Einleitung <br>
+- Kapitel 6.1, These 1 <br>
+- Kapitel 6.2, These 2 <br>
+- Kapitel 7.1, ML-Modell 2 <br>
+- Kapitel 8, Grenzen des Projekts <br>
+- Kapitel 9, Ausblick <br>
+
+Tim: <br>
+- Kapitel 4, Bereinigung der Daten <br>
+- Kapitel 6.1, These 1 <br>
+- Kapitel 6.2, These 2 <br>
+- Kapitel 7.1, ML-Modell 1 <br>
+
+Alle nicht genannten Kapitel wurden gemeinsam bearbeitet.
+
+------------------------------------------------------------------------
+
+
 # Quellenverzeichnis
 
-Datensatz:
+Datensatz: <br>
+- Kaggle (2023): https://www.kaggle.com/datasets/nelgiriyewithana/top-spotify-songs-2023 (Zugriff: 23.12.2023) <br>
 
-Statistik:
+Kapitel 5: <br>
+- Statista (13.02.2020): https://www.statista.com/chart/20826/music-streaming-services-with-most-subscribers-global-fipp/ (Zugriff: 23.12.2023) <br>
 
-Theme
+Verwendetes Theme: <br>
+- Bootswatch (2023): https://bootswatch.com/lux/ (Zugriff: 23.12.2023) <br>
 
 ------------------------------------------------------------------------
 
 # Ehrenwörtliche Erklärung
 
-Hiermit erkläre ich, dass ich die vorliegende Studienarbeit selbständig angefertigt habe. Es wurden nur die in der Arbeit ausdrücklich benannten Quellen und Hilfsmittel benutzt. Wörtlich oder sinngemäß übernommenes Gedankengut habe ich als solches kenntlich gemacht. Diese Arbeit hat in gleicher oder ähnlicher Form ganz oder teilweise noch keiner Prüfungsbehörde vorgelegen.
+Hiermit erklären wir, dass wir die vorliegende Studienarbeit selbständig angefertigt haben. Es wurden nur die in der Arbeit ausdrücklich benannten Quellen und Hilfsmittel benutzt. Wörtlich oder sinngemäß übernommenes Gedankengut haben wir als solches kenntlich gemacht. Diese Arbeit hat in gleicher oder ähnlicher Form ganz oder teilweise noch keiner Prüfungsbehörde vorgelegen.<br>
 
-Unterschriften einfügen
+Bielefed, 23.12.2023 <br>
+**Hier noch deine Unterschrift einfügen @Markus**<br>
+<img src="./pictures/signatures/TimBeyer.png" height="50" width="150"/> 
+<figcaption>Markus Janke</figcaption> <br>
+ 
+
+Bielefed, 23.12.2023 <br>
+<img src="./pictures/signatures/TimBeyer.png" height="50" width="150"/>
+<figcaption>Tim Beyer</figcaption>
+ 
